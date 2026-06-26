@@ -273,7 +273,7 @@ export default function BlogDetailsClient({ slug }: BlogDetailsClientProps) {
             }
             .article-body h1 {
               font-size: 2.25rem;
-              line-height: 2.2;
+              line-height: 1.4;
             }
             .article-body h2 {
               font-size: 1.75rem;
