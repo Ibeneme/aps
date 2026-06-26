@@ -331,7 +331,7 @@ export default function BlogDetailsClient({ slug }: BlogDetailsClientProps) {
             {relatedPosts.map((rel) => (
               <Link
                 key={rel.id}
-                href={`/blog/view/${rel.slug}`}
+                href={`/blog/${rel.slug}`}
                 className="block group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-[#067F76]/20"
               >
                 <div className="relative h-48 sm:h-52 lg:h-56">
