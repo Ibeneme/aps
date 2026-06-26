@@ -278,7 +278,7 @@ export default function BlogDetailsClient({ slug }: BlogDetailsClientProps) {
             .article-body h2 {
               font-size: 1.75rem;
               line-height: 1.4;
-              
+
               padding-bottom: 0.75rem;
             }
             .article-body h3 {
@@ -321,7 +321,6 @@ export default function BlogDetailsClient({ slug }: BlogDetailsClientProps) {
         </div>
       </article>
 
-      {/* Related Posts */}
       {relatedPosts.length > 0 && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 mt-16 sm:mt-20">
           <h2 className="text-2xl sm:text-3xl font-bold mb-8 sm:mb-10 text-gray-900">
