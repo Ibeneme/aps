@@ -1,366 +1,357 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  ArrowRight,
+  Calendar,
+  Clock,
+  Loader2,
+  Trash2,
+  AlertTriangle,
+} from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { Calendar, Clock, ArrowLeft, Share2, User, Edit3 } from "lucide-react";
+import { Rethink_Sans } from "next/font/google";
+import { supabase } from "@/configs/supabase";
+import SEO from "@/components/SEO";
 
-import DOMPurify from "dompurify";
-import { supabase } from "@/lib/supabase";
+const rethinkSans = Rethink_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-rethink-sans",
+  display: "swap",
+});
 
 interface BlogPost {
-  id: string | number;
+  id: number | string;
   slug: string;
   title: string;
   excerpt: string;
-  content: string;
-  category: string;
+  content?: string;
   date: string;
   readTime: string;
+  category: string;
   image: string;
-  author: string;
-  created_at?: string;
+  author?: string;
 }
 
-interface BlogDetailsClientProps {
-  slug: string;
-}
+const SkeletonCard = () => (
+  <div className="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100 animate-pulse">
+    <div className="h-64 bg-slate-200" />
+    <div className="p-8">
+      <div className="flex gap-4 mb-4">
+        <div className="h-4 w-20 bg-slate-200 rounded-full" />
+        <div className="h-4 w-20 bg-slate-200 rounded-full" />
+      </div>
+      <div className="h-6 w-3/4 bg-slate-200 rounded-lg mb-4" />
+      <div className="space-y-2 mb-6">
+        <div className="h-4 w-full bg-slate-200 rounded" />
+        <div className="h-4 w-full bg-slate-200 rounded" />
+        <div className="h-4 w-2/3 bg-slate-200 rounded" />
+      </div>
+      <div className="h-8 w-full bg-slate-100 rounded-xl" />
+    </div>
+  </div>
+);
 
-const fallbackImage =
-  "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1200&q=80";
+const BlogCard: React.FC<{
+  post: BlogPost;
+  onInitiateDelete: (id: number | string, title: string) => void;
+  isDeleting: boolean;
+  isAdmin: boolean;
+}> = ({ post, onInitiateDelete, isDeleting, isAdmin }) => (
+  <motion.article
+    initial={{ opacity: 0, y: 40 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5 }}
+    className="group bg-white rounded-3xl overflow-hidden hover:shadow-xl transition-all border border-slate-100"
+  >
+    <div className="relative h-64 overflow-hidden">
+      <Image
+        src={post.image}
+        alt={post.title}
+        fill
+        className="object-cover group-hover:scale-105 transition-transform duration-700"
+      />
+      <span className="absolute top-4 left-4 bg-white/90 px-3 py-1 rounded-full text-[10px] font-bold uppercase text-[#023B37]">
+        {post.category}
+      </span>
 
-function formatArticle(data: any): BlogPost {
-  const words = data.content?.replace(/<[^>]*>/g, "").split(/\s+/).length || 0;
-  const computedReadTime = Math.max(1, Math.ceil(words / 200)) + " min read";
+      {/* {isAdmin && (
+        <button
+          onClick={() => onInitiateDelete(post.id, post.title)}
+          disabled={isDeleting}
+          className="absolute bottom-4 right-4 bg-red-500 hover:bg-red-600 text-white p-3 rounded-full shadow-lg transition-colors z-10 disabled:opacity-50"
+          title="Delete Article"
+        >
+          {isDeleting ? (
+            <Loader2 size={18} className="animate-spin" />
+          ) : (
+            <Trash2 size={18} />
+          )}
+        </button>
+      )} */}
+    </div>
 
-  const formattedDate = data.created_at
-    ? new Date(data.created_at).toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      })
-    : "Recent";
+    <div className="p-8">
+      <div className="flex gap-4 text-xs text-slate-500 mb-4">
+        <span className="flex items-center gap-1">
+          <Calendar className="w-4 h-4" /> {post.date}
+        </span>
+        <span className="flex items-center gap-1">
+          <Clock className="w-4 h-4" /> {post.readTime}
+        </span>
+      </div>
 
-  return {
-    id: data.id,
-    slug: data.slug,
-    title: data.title,
-    excerpt: data.excerpt || "",
-    content: data.content || "",
-    category: data.category || "General",
-    date: formattedDate,
-    readTime: computedReadTime,
-    image: data.image_url || fallbackImage,
-    author: data.author || "ARIAD Team",
-    created_at: data.created_at,
-  };
-}
+      <h3 className="text-xl font-bold text-[#023B37] mb-3 line-clamp-2 group-hover:text-[#067F76] transition-colors">
+        {post.title}
+      </h3>
 
-export default function BlogDetailsClient({ slug }: BlogDetailsClientProps) {
-  const [post, setPost] = useState<BlogPost | null>(null);
-  const [relatedPosts, setRelatedPosts] = useState<BlogPost[]>([]);
+      <p className="text-slate-600 line-clamp-3 mb-6">{post.excerpt}</p>
+
+      <Link
+        href={`/blog/${post.slug}`}
+        className="text-[#067F76] font-medium flex items-center gap-1 hover:gap-2 transition-all"
+      >
+        Read More <ArrowRight className="w-4 h-4" />
+      </Link>
+    </div>
+  </motion.article>
+);
+
+export default function BlessingAttorneyBlog() {
+  const [allPosts, setAllPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
-  const [shareSuccess, setShareSuccess] = useState(false);
+  const [deletingId, setDeletingId] = useState<number | string | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
 
+  const [modalOpen, setModalOpen] = useState(false);
+  const [targetId, setTargetId] = useState<number | string | null>(null);
+  const [targetTitle, setTargetTitle] = useState("");
+
+  const heroBg =
+    "https://images.unsplash.com/photo-1600427652630-f97cc4db10cd?q=80&w=2070&auto=format&fit=crop";
+
+  // Check Admin Token
   useEffect(() => {
-    const token = localStorage.getItem("adminToken");
-    setIsAdmin(!!token);
+    const checkAdmin = () => {
+      const token = localStorage.getItem("adminToken");
+      setIsAdmin(!!token && token.length > 10);
+    };
 
-    window.scrollTo(0, 0);
+    checkAdmin();
+    window.addEventListener("storage", checkAdmin);
+    return () => window.removeEventListener("storage", checkAdmin);
+  }, []);
 
-    async function fetchArticleDetails() {
-      try {
-        setLoading(true);
-        const { data: currentArticle, error } = await supabase
-          .from("articles")
-          .select("*")
-          .eq("slug", slug)
-          .single();
-
-        if (error || !currentArticle)
-          throw error || new Error("Article not found");
-
-        const formattedPost = formatArticle(currentArticle);
-        setPost(formattedPost);
-
-        const { data: siblings } = await supabase
-          .from("articles")
-          .select("*")
-          .neq("id", currentArticle.id)
-          .limit(6);
-
-        if (siblings) {
-          const formatted = siblings.map(formatArticle);
-          const sorted = formatted
-            .sort(
-              (a, b) =>
-                (b.category === formattedPost.category ? 1 : 0) -
-                (a.category === formattedPost.category ? 1 : 0)
-            )
-            .slice(0, 3);
-          setRelatedPosts(sorted);
-        }
-      } catch (err) {
-        console.error("Error fetching article:", err);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    if (slug) fetchArticleDetails();
-  }, [slug]);
-
-  const handleShare = async () => {
-    if (!post) return;
+  const fetchSupabaseArticles = async () => {
     try {
-      if (navigator.share) {
-        await navigator.share({
-          title: post.title,
-          text: post.excerpt,
-          url: window.location.href,
-        });
-      } else {
-        await navigator.clipboard.writeText(window.location.href);
-        setShareSuccess(true);
-        setTimeout(() => setShareSuccess(false), 2200);
+      setLoading(true);
+      const { data, error } = await supabase
+        .from("articles")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+
+      if (data) {
+        const formattedPosts: BlogPost[] = data.map((article: any) => ({
+          id: article.id,
+          slug: article.slug,
+          title: article.title,
+          excerpt: article.excerpt,
+          content: article.content,
+          category: article.category || "General",
+          date: article.created_at
+            ? new Date(article.created_at).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })
+            : "Recent",
+          readTime:
+            Math.max(
+              1,
+              Math.ceil(
+                (article.content?.replace(/<[^>]*>/g, "").split(/\s+/).length ||
+                  0) / 200
+              )
+            ) + " min read",
+          image:
+            article.image_url ||
+            "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80",
+        }));
+
+        setAllPosts(formattedPosts);
       }
-    } catch (err: any) {
-      if (err.name !== "AbortError") console.error("Share failed", err);
+    } catch (err) {
+      console.error("Error fetching articles:", err);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const sanitizedContent = post?.content
-    ? DOMPurify.sanitize(post.content, {
-        ALLOWED_TAGS: [
-          "h1",
-          "h2",
-          "h3",
-          "h4",
-          "p",
-          "div",
-          "br",
-          "strong",
-          "em",
-          "b",
-          "i",
-          "ul",
-          "ol",
-          "li",
-          "blockquote",
-          "code",
-          "pre",
-          "a",
-          "img",
-          "table",
-          "th",
-          "td",
-          "tr",
-          "span",
-          "hr",
-          "del",
-          "s",
-          "strike",
-        ],
-        ALLOWED_ATTR: ["href", "target", "rel", "src", "alt", "class", "style"],
-      })
-    : "";
+  const handleInitiateDelete = (id: number | string, title: string) => {
+    if (!isAdmin) return;
+    setTargetId(id);
+    setTargetTitle(title);
+    setModalOpen(true);
+  };
 
-  if (loading) return <ArticleSkeleton />;
+  const handleConfirmDelete = async () => {
+    if (!targetId || !isAdmin) return;
 
-  if (!post) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#FAF8F5]">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Article Not Found
-          </h1>
-          <Link href="/blog" className="text-[#067F76] hover:underline">
-            ← Back to Blog
-          </Link>
-        </div>
-      </div>
-    );
-  }
+    const idToDelete = targetId;
+    setModalOpen(false);
+    setDeletingId(idToDelete);
+
+    try {
+      const { error } = await supabase
+        .from("articles")
+        .delete()
+        .eq("id", idToDelete);
+
+      if (error) throw error;
+
+      setAllPosts((prev) => prev.filter((post) => post.id !== idToDelete));
+    } catch (err: any) {
+      console.error("Failed to delete:", err);
+      alert("Could not delete article: " + err.message);
+    } finally {
+      setDeletingId(null);
+      setTargetId(null);
+      setTargetTitle("");
+    }
+  };
+
+  useEffect(() => {
+    fetchSupabaseArticles();
+  }, []);
 
   return (
-    <div className="bg-[#FAF8F5] min-h-screen pb-20">
-      {/* Back Button */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-8">
-        <Link
-          href="/blog"
-          className="inline-flex items-center gap-2 text-[#067F76] hover:underline text-sm sm:text-base"
-        >
-          <ArrowLeft className="w-5 h-5" /> Back to All Articles
-        </Link>
-      </div>
+    <>
+      <SEO
+        title="Latest Insights & Articles"
+        description="Clinical insights, parenting wisdom, mental health articles, and honest conversations from ARIAD Psychological Services."
+        keywords="mental health, psychology, parenting, clinical insights, neuropsychological evaluation, therapy, ADHD, autism, Dallas psychology"
+      />
 
-      {/* Hero Section */}
-      <section className="relative h-[50vh] sm:h-[60vh] lg:h-[70vh] flex items-end mt-4">
-        <Image
-          src={post.image}
-          alt={post.title}
-          fill
-          className="object-cover"
-          priority
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent" />
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 pb-10 sm:pb-16 text-white w-full">
-          <div className="inline-flex items-center px-4 py-1.5 bg-white/10 rounded-full text-xs sm:text-sm mb-6">
-            {post.category}
+      <div className="min-h-screen bg-slate-50">
+        {/* Hero Section */}
+        <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-slate-900">
+          <div className="absolute inset-0">
+            <Image
+              src={heroBg}
+              alt="Hero"
+              fill
+              priority
+              className="object-cover scale-110"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80" />
           </div>
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black mb-6 leading-tight">
-            {post.title}
-          </h1>
-          <div className="flex flex-wrap gap-x-6 gap-y-2 text-xs sm:text-sm opacity-90">
-            <span>
-              <User className="inline w-4 h-4 mr-1" /> {post.author}
-            </span>
-            <span>
-              <Calendar className="inline w-4 h-4 mr-1" /> {post.date}
-            </span>
-            <span>
-              <Clock className="inline w-4 h-4 mr-1" /> {post.readTime}
-            </span>
-            <button
-              onClick={handleShare}
-              className="flex items-center gap-1 hover:text-white/80 transition-colors"
-            >
-              <Share2 className="w-4 h-4" />
-              {shareSuccess ? "Link Copied!" : "Share"}
-            </button>
 
-            {isAdmin && (
-              <Link
-                href={`/blog/${post.slug}/edit`}
-                className="ml-auto flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white px-6 py-2 rounded-2xl font-medium transition-all"
-              >
-                <Edit3 size={18} />
-                Edit
-              </Link>
-            )}
-          </div>
-        </div>
-      </section>
+          <div className="relative z-10 max-w-5xl mx-auto px-6 text-center text-white">
+            <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-6">
+              Thoughts That <br />
+              <span className="bg-gradient-to-r from-[#67E8D6] to-[#D6C1A0] bg-clip-text text-transparent">
+                Guide Families
+              </span>
+            </h1>
+            <p className="max-w-2xl mx-auto text-lg text-slate-300 font-light">
+              Clinical insights, parenting wisdom, and honest conversations.
+            </p>
 
-      {/* Article Content - NO BORDER LINES */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 -mt-8 sm:-mt-10 relative z-20">
-        <div className="bg-white rounded-3xl p-6 sm:p-10 md:p-16 shadow-xl border-0">
-          <style jsx global>{`
-            .article-body {
-              font-size: 1.05rem;
-              line-height: 1.85;
-              color: #374151;
-            }
-            .article-body h1,
-            .article-body h2,
-            .article-body h3 {
-              font-weight: 700;
-              margin-top: 2.25rem;
-              margin-bottom: 1.25rem;
-              scroll-margin-top: 80px;
-              color: #1f2937;
-            }
-            .article-body h1 {
-              font-size: 2.25rem;
-              line-height: 2.2;
-            }
-            .article-body h2 {
-              font-size: 1.75rem;
-              line-height: 1.4;
-              /* Removed border-bottom */
-            }
-            .article-body h3 {
-              font-size: 1.45rem;
-              line-height: 1.5;
-            }
-            .article-body p {
-              margin-bottom: 1.35rem;
-            }
-            .article-body ul,
-            .article-body ol {
-              margin-bottom: 1.5rem;
-              padding-left: 1.6rem;
-            }
-            .article-body li {
-              margin-bottom: 0.65rem;
-            }
-            .article-body strong,
-            .article-body b {
-              color: #1f2937;
-              font-weight: 600;
-            }
-            .article-body a {
-              color: #067f76;
-              text-decoration: underline;
-            }
-            .article-body a:hover {
-              color: #045c55;
-            }
-          `}</style>
-
-          <div
-            dangerouslySetInnerHTML={{ __html: sanitizedContent }}
-            className="article-body prose prose-lg max-w-none"
-          />
-        </div>
-      </article>
-
-      {/* Related Posts - Also Cleaned */}
-      {relatedPosts.length > 0 && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 mt-16 sm:mt-20">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-8 sm:mb-10 text-gray-900">
-            More in {post.category}
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {relatedPosts.map((rel) => (
-              <Link
-                key={rel.id}
-                href={`/blog/view/${rel.slug}`}
-                className="block group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300"
-              >
-                <div className="relative h-48 sm:h-52 lg:h-56">
-                  <Image
-                    src={rel.image}
-                    alt={rel.title}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <div className="p-6 sm:p-8">
-                  <div className="font-bold text-lg sm:text-xl mb-3 group-hover:text-[#067F76] transition-colors line-clamp-2">
-                    {rel.title}
-                  </div>
-                  <p className="text-gray-600 text-sm line-clamp-3 mb-6">
-                    {rel.excerpt}
-                  </p>
-                  <span className="text-[#067F76] font-medium inline-flex items-center gap-2 group-hover:gap-3 transition-all text-sm">
-                    Read Article →
-                  </span>
-                </div>
-              </Link>
-            ))}
+            {/* {isAdmin && (
+              <div className="mt-10">
+                <Link
+                  href="/blog/create"
+                  className="inline-flex items-center gap-3 bg-white text-[#023B37] px-8 py-4 rounded-full font-semibold hover:bg-[#067F76] hover:text-white transition-all"
+                >
+                  Create New Article
+                  <ArrowRight />
+                </Link>
+              </div>
+            )} */}
           </div>
         </section>
-      )}
-    </div>
-  );
-}
 
-function ArticleSkeleton() {
-  return (
-    <div className="bg-[#FAF8F5] min-h-screen">
-      <div className="max-w-4xl mx-auto px-6 pt-8">
-        <div className="h-5 w-40 bg-slate-200 rounded-full animate-pulse" />
+
+        {/* Posts Section */}
+        <section className="max-w-7xl mx-auto px-6 py-20">
+          <div className="flex justify-between items-end mb-12">
+            <h2 className="text-4xl font-bold text-[#023B37]">
+              Latest Insights
+            </h2>
+          </div>
+
+          {loading ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <SkeletonCard key={i} />
+              ))}
+            </div>
+          ) : allPosts.length === 0 ? (
+            <div className="text-center py-20 bg-white rounded-3xl">
+              <p className="text-slate-500">No articles found.</p>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <AnimatePresence mode="popLayout">
+                {allPosts.map((post) => (
+                  <BlogCard
+                    key={post.id}
+                    post={post}
+                    onInitiateDelete={handleInitiateDelete}
+                    isDeleting={deletingId === post.id}
+                    isAdmin={isAdmin}
+                  />
+                ))}
+              </AnimatePresence>
+            </div>
+          )}
+        </section>
+
+        {/* Delete Confirmation Modal */}
+        <AnimatePresence>
+          {modalOpen && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60">
+              <motion.div
+                initial={{ scale: 0.95, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.95, opacity: 0 }}
+                className="bg-white rounded-3xl p-8 max-w-md w-full text-center"
+              >
+                <div className="mx-auto w-14 h-14 rounded-full bg-red-50 flex items-center justify-center mb-5">
+                  <AlertTriangle className="text-red-500" size={28} />
+                </div>
+                <h3 className="text-2xl font-bold text-[#023B37] mb-2">
+                  Confirm Deletion
+                </h3>
+                <p className="text-slate-600 mb-8">
+                  Are you sure you want to permanently delete{" "}
+                  <span className="font-semibold">"{targetTitle}"</span>? This
+                  action cannot be undone.
+                </p>
+                <div className="flex gap-4">
+                  <button
+                    onClick={() => setModalOpen(false)}
+                    className="flex-1 py-3.5 bg-slate-100 hover:bg-slate-200 rounded-2xl font-medium transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleConfirmDelete}
+                    className="flex-1 py-3.5 bg-red-500 hover:bg-red-600 text-white rounded-2xl font-medium transition-colors"
+                  >
+                    Delete Permanently
+                  </button>
+                </div>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
       </div>
-      <section className="relative h-[65vh] bg-slate-200 animate-pulse mt-6" />
-      <div className="max-w-4xl mx-auto px-6 -mt-10 relative z-20">
-        <div className="bg-white rounded-3xl p-12 space-y-6 border border-slate-100">
-          {Array.from({ length: 10 }).map((_, i) => (
-            <div key={i} className="h-4 bg-slate-100 rounded animate-pulse" />
-          ))}
-        </div>
-      </div>
-    </div>
+    </>
   );
 }
