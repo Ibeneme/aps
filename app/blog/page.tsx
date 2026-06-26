@@ -77,7 +77,6 @@ const BlogCard: React.FC<{
       <span className="absolute top-4 left-4 bg-white/90 px-3 py-1 rounded-full text-[10px] font-bold uppercase text-[#023B37]">
         {post.category}
       </span>
-      
 
       {/* {isAdmin && (
         <button
@@ -277,18 +276,13 @@ export default function BlessingAttorneyBlog() {
           </div>
         </section>
 
+
         {/* Posts Section */}
         <section className="max-w-7xl mx-auto px-6 py-20">
           <div className="flex justify-between items-end mb-12">
             <h2 className="text-4xl font-bold text-[#023B37]">
               Latest Insights
             </h2>
-            <Link
-              href="/"
-              className="text-[#067F76] font-medium flex items-center gap-2 hover:gap-3 transition-all"
-            >
-              View All <ArrowRight className="w-4 h-4" />
-            </Link>
           </div>
 
           {loading ? (

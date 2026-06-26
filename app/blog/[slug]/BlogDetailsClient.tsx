@@ -63,7 +63,6 @@ export default function BlogDetailsClient({ slug }: BlogDetailsClientProps) {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    // Check for admin token
     const token = localStorage.getItem("adminToken");
     setIsAdmin(!!token);
 
@@ -84,7 +83,6 @@ export default function BlogDetailsClient({ slug }: BlogDetailsClientProps) {
         const formattedPost = formatArticle(currentArticle);
         setPost(formattedPost);
 
-        // Related posts
         const { data: siblings } = await supabase
           .from("articles")
           .select("*")
@@ -114,7 +112,6 @@ export default function BlogDetailsClient({ slug }: BlogDetailsClientProps) {
 
   const handleShare = async () => {
     if (!post) return;
-
     try {
       if (navigator.share) {
         await navigator.share({
@@ -128,12 +125,11 @@ export default function BlogDetailsClient({ slug }: BlogDetailsClientProps) {
         setTimeout(() => setShareSuccess(false), 2200);
       }
     } catch (err: any) {
-      if (err.name !== "AbortError") {
-        console.error("Share failed", err);
-      }
+      if (err.name !== "AbortError") console.error("Share failed", err);
     }
   };
 
+  // Improved sanitization
   const sanitizedContent = post?.content
     ? DOMPurify.sanitize(post.content, {
         ALLOWED_TAGS: [
@@ -162,8 +158,21 @@ export default function BlogDetailsClient({ slug }: BlogDetailsClientProps) {
           "tr",
           "span",
           "hr",
+          "del",
+          "s",
+          "strike",
         ],
-        ALLOWED_ATTR: ["href", "target", "rel", "src", "alt", "class", "style"],
+        ALLOWED_ATTR: [
+          "href",
+          "target",
+          "rel",
+          "src",
+          "alt",
+          "class",
+          "style",
+          "title",
+        ],
+        ADD_ATTR: ["target"], // Allow target="_blank"
       })
     : "";
 
@@ -196,7 +205,7 @@ export default function BlogDetailsClient({ slug }: BlogDetailsClientProps) {
         </Link>
       </div>
 
-      {/* Hero Section - More Responsive */}
+      {/* Hero Section */}
       <section className="relative h-[50vh] sm:h-[60vh] lg:h-[70vh] flex items-end mt-4">
         <Image
           src={post.image}
@@ -231,23 +240,20 @@ export default function BlogDetailsClient({ slug }: BlogDetailsClientProps) {
               {shareSuccess ? "Link Copied!" : "Share"}
             </button>
 
-
             {isAdmin && (
-            <Link
-              href={`/blog/${post.slug}/edit`}
-              className="ml-auto flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white px-6 py-2 rounded-2xl font-medium transition-all"
-            >
-              <Edit3 size={18} />
-              Edit
-            </Link>
-          )}
+              <Link
+                href={`/blog/${post.slug}/edit`}
+                className="ml-auto flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white px-6 py-2 rounded-2xl font-medium transition-all"
+              >
+                <Edit3 size={18} />
+                Edit
+              </Link>
+            )}
           </div>
-
-   
         </div>
       </section>
 
-      {/* Article Content */}
+      {/* Article Content - FIXED */}
       <article className="max-w-4xl mx-auto px-4 sm:px-6 -mt-8 sm:-mt-10 relative z-20">
         <div className="bg-white rounded-3xl p-6 sm:p-10 md:p-16 shadow-xl">
           <style jsx global>{`
@@ -265,13 +271,19 @@ export default function BlogDetailsClient({ slug }: BlogDetailsClientProps) {
               scroll-margin-top: 80px;
               color: #1f2937;
             }
+            .article-body h1 {
+              font-size: 2.25rem;
+              line-height: 2.2;
+            }
             .article-body h2 {
               font-size: 1.75rem;
+              line-height: 1.4;
               border-bottom: 2px solid #e5e7eb;
               padding-bottom: 0.75rem;
             }
             .article-body h3 {
               font-size: 1.45rem;
+              line-height: 1.5;
             }
             .article-body p {
               margin-bottom: 1.35rem;
@@ -281,27 +293,13 @@ export default function BlogDetailsClient({ slug }: BlogDetailsClientProps) {
               margin-bottom: 1.5rem;
               padding-left: 1.6rem;
             }
-            .article-body ul {
-              list-style-type: disc;
-            }
-            .article-body ol {
-              list-style-type: decimal;
-            }
             .article-body li {
               margin-bottom: 0.65rem;
-              padding-left: 0.25rem;
             }
             .article-body strong,
             .article-body b {
               color: #1f2937;
               font-weight: 600;
-            }
-            .article-body blockquote {
-              border-left: 4px solid #067f76;
-              padding-left: 1.25rem;
-              color: #4b5563;
-              font-style: italic;
-              margin: 2rem 0;
             }
             .article-body a {
               color: #067f76;
@@ -310,7 +308,12 @@ export default function BlogDetailsClient({ slug }: BlogDetailsClientProps) {
             .article-body a:hover {
               color: #045c55;
             }
+            /* Respect inline styles from your content */
+            .article-body [style*="line-height"] {
+              line-height: inherit !important;
+            }
           `}</style>
+
           <div
             dangerouslySetInnerHTML={{ __html: sanitizedContent }}
             className="article-body prose prose-lg max-w-none"
@@ -318,47 +321,40 @@ export default function BlogDetailsClient({ slug }: BlogDetailsClientProps) {
         </div>
       </article>
 
-      {/* Related Posts - Fixed Mobile Overflow + Better Responsive */}
+      {/* Related Posts */}
       {relatedPosts.length > 0 && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 mt-16 sm:mt-20">
           <h2 className="text-2xl sm:text-3xl font-bold mb-8 sm:mb-10 text-gray-900">
             More in {post.category}
           </h2>
-
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {relatedPosts.map((rel, index) => {
-              console.log(
-                `🔗 Rendering related post #${index + 1}:`,
-                rel.title
-              );
-              return (
-                <Link
-                  key={rel.id}
-                  href={`/blog/view/${rel.slug}`}
-                  className="block group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-[#067F76]/20"
-                >
-                  <div className="relative h-48 sm:h-52 lg:h-56">
-                    <Image
-                      src={rel.image}
-                      alt={rel.title}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
+            {relatedPosts.map((rel) => (
+              <Link
+                key={rel.id}
+                href={`/blog/view/${rel.slug}`}
+                className="block group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-[#067F76]/20"
+              >
+                <div className="relative h-48 sm:h-52 lg:h-56">
+                  <Image
+                    src={rel.image}
+                    alt={rel.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                <div className="p-6 sm:p-8">
+                  <div className="font-bold text-lg sm:text-xl mb-3 group-hover:text-[#067F76] transition-colors line-clamp-2">
+                    {rel.title}
                   </div>
-                  <div className="p-6 sm:p-8">
-                    <div className="font-bold text-lg sm:text-xl mb-3 group-hover:text-[#067F76] transition-colors line-clamp-2">
-                      {rel.title}
-                    </div>
-                    <p className="text-gray-600 text-sm line-clamp-3 mb-6">
-                      {rel.excerpt}
-                    </p>
-                    <span className="text-[#067F76] font-medium inline-flex items-center gap-2 group-hover:gap-3 transition-all text-sm">
-                      Read Article →
-                    </span>
-                  </div>
-                </Link>
-              );
-            })}
+                  <p className="text-gray-600 text-sm line-clamp-3 mb-6">
+                    {rel.excerpt}
+                  </p>
+                  <span className="text-[#067F76] font-medium inline-flex items-center gap-2 group-hover:gap-3 transition-all text-sm">
+                    Read Article →
+                  </span>
+                </div>
+              </Link>
+            ))}
           </div>
         </section>
       )}
@@ -366,16 +362,14 @@ export default function BlogDetailsClient({ slug }: BlogDetailsClientProps) {
   );
 }
 
-// Skeleton
+// Skeleton (unchanged)
 function ArticleSkeleton() {
   return (
     <div className="bg-[#FAF8F5] min-h-screen">
       <div className="max-w-4xl mx-auto px-6 pt-8">
         <div className="h-5 w-40 bg-slate-200 rounded-full animate-pulse" />
       </div>
-
       <section className="relative h-[65vh] bg-slate-200 animate-pulse mt-6" />
-
       <div className="max-w-4xl mx-auto px-6 -mt-10 relative z-20">
         <div className="bg-white rounded-3xl p-12 space-y-6 border border-slate-100">
           {Array.from({ length: 10 }).map((_, i) => (
