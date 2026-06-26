@@ -4,7 +4,7 @@ import HomePageView from "./home/page";
 
 export const metadata: Metadata = {
   title:
-    "ARIAD Psychological Services | ADHD & Autism Testing in Dallas & Houston",
+    "Expert psychological and neuropsychological evaluations in Dallas and Houston, Texas. ADHD testing, Autism (ASD) assessments, psychoeducational, and more. Compassionate care for children, teens, and adults",
   description:
     "Expert psychological and neuropsychological evaluations in Dallas and Houston, Texas. ADHD testing, Autism (ASD) assessments, psychoeducational, and more. Compassionate care for children, teens, and adults.",
   alternates: {
