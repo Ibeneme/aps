@@ -468,7 +468,7 @@ export default function RichTextEditor({
         onKeyUp={updateActiveFormats}
         onMouseUp={updateActiveFormats}
         onClick={updateActiveFormats}
-        onPaste={handlePaste}           {/* ← NEW: Markdown paste handler */}
+        onPaste={handlePaste}         
         data-placeholder={placeholder}
         style={{ minHeight }}
         className="rte-content w-full p-6 bg-white rounded-2xl border border-slate-200 outline-none focus:border-[#067F76] text-base leading-relaxed"
