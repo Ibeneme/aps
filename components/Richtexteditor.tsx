@@ -26,17 +26,9 @@ import {
 } from "lucide-react";
 
 interface RichTextEditorProps {
-  /** Current HTML content */
   value: string;
-  /** Called with the new HTML whenever the content changes */
   onChange: (html: string) => void;
   placeholder?: string;
-  /**
-   * Pixels the toolbar should sit below the top of the viewport when stuck.
-   * Set this to the height of your site's fixed nav bar (e.g. 96 if your
-   * header is 96px tall) so the toolbar parks just under it instead of
-   * disappearing behind it.
-   */
   stickyTopOffset?: number;
   className?: string;
   minHeight?: number;
@@ -62,9 +54,34 @@ export default function RichTextEditor({
   const fontSizes = [12, 14, 16, 18, 20, 24, 28, 32, 36, 48];
   const lineHeights = ["1.0", "1.2", "1.4", "1.6", "1.8", "2.0", "2.5", "3.0"];
 
-  // Initialize content once, and use CSS-based execCommand output
-  // (span style="color:..." instead of legacy <font>/<strike> tags).
-  // This is what makes color/highlight reliably "stick".
+  // Simple Markdown to HTML converter
+  const markdownToHtml = (markdown: string): string => {
+    let html = markdown
+      // Headers
+      .replace(/^### (.*$)/gm, "<h3>$1</h3>")
+      .replace(/^## (.*$)/gm, "<h2>$1</h2>")
+      .replace(/^# (.*$)/gm, "<h1>$1</h1>")
+      // Bold
+      .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+      // Italic
+      .replace(/\*(.+?)\*/g, "<em>$1</em>")
+      // Unordered lists
+      .replace(/^\s*[-*+] (.+)$/gm, "<ul><li>$1</li></ul>")
+      // Ordered lists
+      .replace(/^\s*\d+\. (.+)$/gm, "<ol><li>$1</li></ol>")
+      // Blockquotes
+      .replace(/^> (.+)$/gm, "<blockquote>$1</blockquote>")
+      // Horizontal rule
+      .replace(/^---$/gm, "<hr>");
+
+    // Clean up consecutive list tags
+    html = html
+      .replace(/<\/ul>\s*<ul>/g, "")
+      .replace(/<\/ol>\s*<ol>/g, "");
+
+    return html;
+  };
+
   useEffect(() => {
     try {
       document.execCommand("styleWithCSS", false, "true" as any);
@@ -82,15 +99,9 @@ export default function RichTextEditor({
     if (editorRef.current) onChange(editorRef.current.innerHTML);
   }, [onChange]);
 
-  const getBlockElement = (
-    node: Node | null,
-    editor: HTMLElement
-  ): HTMLElement | null => {
+  const getBlockElement = (node: Node | null, editor: HTMLElement): HTMLElement | null => {
     while (node && node !== editor) {
-      if (
-        node.nodeType === Node.ELEMENT_NODE &&
-        BLOCK_TAGS.test((node as Element).tagName)
-      ) {
+      if (node.nodeType === Node.ELEMENT_NODE && BLOCK_TAGS.test((node as Element).tagName)) {
         return node as HTMLElement;
       }
       node = node.parentNode;
@@ -110,6 +121,7 @@ export default function RichTextEditor({
       setActiveFormats(new Set());
       return;
     }
+
     const next = new Set<string>();
     [
       "bold",
@@ -126,6 +138,7 @@ export default function RichTextEditor({
         if (document.queryCommandState(cmd)) next.add(cmd);
       } catch {}
     });
+
     try {
       const block = document.queryCommandValue("formatBlock").toLowerCase();
       if (["h1", "h2", "h3", "h4", "blockquote"].includes(block)) {
@@ -150,8 +163,7 @@ export default function RichTextEditor({
 
   useEffect(() => {
     document.addEventListener("selectionchange", updateActiveFormats);
-    return () =>
-      document.removeEventListener("selectionchange", updateActiveFormats);
+    return () => document.removeEventListener("selectionchange", updateActiveFormats);
   }, [updateActiveFormats]);
 
   const exec = (command: string, val?: string) => {
@@ -172,7 +184,6 @@ export default function RichTextEditor({
     const blockEl = getBlockElement(sel.anchorNode, editor);
     if (!blockEl) {
       document.execCommand("formatBlock", false, `<${tag}>`);
-      editor.focus();
       syncContent();
       updateActiveFormats();
       return;
@@ -189,7 +200,6 @@ export default function RichTextEditor({
     sel.removeAllRanges();
     sel.addRange(range);
 
-    editor.focus();
     syncContent();
     updateActiveFormats();
   };
@@ -202,15 +212,13 @@ export default function RichTextEditor({
     const sel = window.getSelection();
 
     if (!sel || sel.rangeCount === 0 || sel.isCollapsed) {
-      editor
-        .querySelectorAll<HTMLElement>(
-          "p,h1,h2,h3,h4,h5,h6,blockquote,div,li,ul,ol"
-        )
+      editor.querySelectorAll<HTMLElement>("p,h1,h2,h3,h4,h5,h6,blockquote,div,li,ul,ol")
         .forEach((el) => (el.style.lineHeight = val));
       syncContent();
       return;
     }
 
+    // ... (rest of applyLineHeight unchanged)
     const range = sel.getRangeAt(0);
     const affected = new Set<HTMLElement>();
     const ab = getBlockElement(sel.anchorNode, editor);
@@ -220,12 +228,11 @@ export default function RichTextEditor({
 
     const walker = document.createTreeWalker(editor, NodeFilter.SHOW_ELEMENT, {
       acceptNode: (n) => {
-        if (!BLOCK_TAGS.test((n as Element).tagName))
-          return NodeFilter.FILTER_SKIP;
+        if (!BLOCK_TAGS.test((n as Element).tagName)) return NodeFilter.FILTER_SKIP;
         const nr = document.createRange();
         nr.selectNode(n);
         return range.compareBoundaryPoints(Range.END_TO_START, nr) <= 0 &&
-          range.compareBoundaryPoints(Range.START_TO_END, nr) >= 0
+               range.compareBoundaryPoints(Range.START_TO_END, nr) >= 0
           ? NodeFilter.FILTER_ACCEPT
           : NodeFilter.FILTER_SKIP;
       },
@@ -238,11 +245,6 @@ export default function RichTextEditor({
 
     syncContent();
   };
-
-  // ---- FIXED: text color, highlight, and font size ----
-  // These now use native execCommand instead of rebuilding the
-  // selection from plain text, so they no longer wipe out any
-  // bold/italic/links already inside the selected text.
 
   const applyTextColor = (color: string) => {
     const editor = editorRef.current;
@@ -257,16 +259,8 @@ export default function RichTextEditor({
     if (!editor) return;
     editor.focus();
     let ok = false;
-    try {
-      ok = document.execCommand("hiliteColor", false, color);
-    } catch {
-      ok = false;
-    }
-    if (!ok) {
-      try {
-        document.execCommand("backColor", false, color);
-      } catch {}
-    }
+    try { ok = document.execCommand("hiliteColor", false, color); } catch {}
+    if (!ok) try { document.execCommand("backColor", false, color); } catch {}
     syncContent();
   };
 
@@ -278,8 +272,6 @@ export default function RichTextEditor({
     const sel = window.getSelection();
     if (!sel || sel.rangeCount === 0 || sel.isCollapsed) return;
 
-    // Use size "7" as a marker (largest legacy size, unlikely to collide),
-    // then swap the resulting <font size="7"> for a span with the real px size.
     document.execCommand("fontSize", false, "7");
     editor.querySelectorAll('font[size="7"]').forEach((el) => {
       const span = document.createElement("span");
@@ -315,12 +307,43 @@ export default function RichTextEditor({
     const text = sel && sel.toString() ? sel.toString() : "link text";
     const url = window.prompt("Enter URL:", "https://");
     if (!url) return;
-    document.execCommand(
-      "insertHTML",
-      false,
-      `<a href="${escapeHtml(url)}">${escapeHtml(text)}</a>`
-    );
+    document.execCommand("insertHTML", false, `<a href="${escapeHtml(url)}">${escapeHtml(text)}</a>`);
     syncContent();
+  };
+
+  // MARKDOWN PASTE HANDLER
+  const handlePaste = (e: React.ClipboardEvent<HTMLDivElement>) => {
+    const pastedText = e.clipboardData.getData("text/plain");
+    const editor = editorRef.current;
+    if (!editor) return;
+
+    // Detect if it looks like markdown
+    const hasMarkdown = /#+\s|(\*\*|__)(.+?)(\*\*|__)|^\s*[-*+]\s|^>\s|^\d+\./m.test(pastedText);
+
+    if (hasMarkdown) {
+      e.preventDefault();
+      const converted = markdownToHtml(pastedText);
+      
+      const sel = window.getSelection();
+      if (sel && sel.rangeCount > 0) {
+        const range = sel.getRangeAt(0);
+        range.deleteContents();
+        const tempDiv = document.createElement("div");
+        tempDiv.innerHTML = converted;
+        const fragment = document.createDocumentFragment();
+        
+        while (tempDiv.firstChild) {
+          fragment.appendChild(tempDiv.firstChild);
+        }
+        range.insertNode(fragment);
+      } else {
+        editor.innerHTML += converted;
+      }
+      
+      syncContent();
+      updateActiveFormats();
+    }
+    // Otherwise let browser handle normal paste
   };
 
   const toolbarButtons = [
@@ -379,6 +402,7 @@ export default function RichTextEditor({
       `}</style>
 
       <div className="rte-toolbar flex flex-wrap items-center gap-2 p-3 mb-3 bg-slate-100 rounded-xl border border-slate-200 shadow-sm">
+        {/* ... existing toolbar content (unchanged) ... */}
         <div className="flex gap-1 pr-3 border-r border-slate-300">
           <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => exec("undo")} className="p-2 hover:bg-white rounded-lg" title="Undo">
             <Undo size={18} />
@@ -391,37 +415,25 @@ export default function RichTextEditor({
           </button>
         </div>
 
+        {/* Font size, line height, colors... (same as before) */}
         <div className="flex items-center gap-1 pr-3 border-r border-slate-300">
-          <select
-            value={fontSize}
-            onChange={(e) => applyFontSize(e.target.value)}
-            className="bg-white border border-slate-300 rounded-lg px-2 py-1.5 text-sm focus:outline-none focus:border-[#067F76]"
-            title="Select text first, then choose a size"
-          >
-            {fontSizes.map((s) => (
-              <option key={s} value={s}>{s}px</option>
-            ))}
+          <select value={fontSize} onChange={(e) => applyFontSize(e.target.value)} className="bg-white border border-slate-300 rounded-lg px-2 py-1.5 text-sm focus:outline-none focus:border-[#067F76]">
+            {fontSizes.map((s) => <option key={s} value={s}>{s}px</option>)}
           </select>
         </div>
 
         <div className="flex items-center gap-1 pr-3 border-r border-slate-300">
-          <select
-            value={lineHeight}
-            onChange={(e) => applyLineHeight(e.target.value)}
-            className="bg-white border border-slate-300 rounded-lg px-2 py-1.5 text-sm focus:outline-none focus:border-[#067F76]"
-          >
-            {lineHeights.map((lh) => (
-              <option key={lh} value={lh}>↕ {lh}</option>
-            ))}
+          <select value={lineHeight} onChange={(e) => applyLineHeight(e.target.value)} className="bg-white border border-slate-300 rounded-lg px-2 py-1.5 text-sm focus:outline-none focus:border-[#067F76]">
+            {lineHeights.map((lh) => <option key={lh} value={lh}>↕ {lh}</option>)}
           </select>
         </div>
 
         <div className="flex gap-1 pr-3 border-r border-slate-300">
-          <label className="cursor-pointer p-2 hover:bg-white rounded-lg" title="Text color (select text first)">
+          <label className="cursor-pointer p-2 hover:bg-white rounded-lg" title="Text color">
             <Palette size={18} />
             <input type="color" onChange={(e) => applyTextColor(e.target.value)} className="hidden" />
           </label>
-          <label className="cursor-pointer p-2 hover:bg-white rounded-lg" title="Highlight (select text first)">
+          <label className="cursor-pointer p-2 hover:bg-white rounded-lg" title="Highlight">
             <Highlighter size={18} />
             <input type="color" defaultValue="#fff59d" onChange={(e) => applyHighlight(e.target.value)} className="hidden" />
           </label>
@@ -438,9 +450,7 @@ export default function RichTextEditor({
                 onMouseDown={(e) => e.preventDefault()}
                 onClick={btn.action}
                 className={`p-2 rounded-lg transition-colors ${
-                  isActive
-                    ? "bg-[#067F76] text-white shadow-sm"
-                    : "text-slate-600 hover:bg-white hover:text-[#067F76] hover:shadow-sm"
+                  isActive ? "bg-[#067F76] text-white shadow-sm" : "text-slate-600 hover:bg-white hover:text-[#067F76] hover:shadow-sm"
                 }`}
               >
                 {btn.icon}
@@ -458,6 +468,7 @@ export default function RichTextEditor({
         onKeyUp={updateActiveFormats}
         onMouseUp={updateActiveFormats}
         onClick={updateActiveFormats}
+        onPaste={handlePaste}           {/* ← NEW: Markdown paste handler */}
         data-placeholder={placeholder}
         style={{ minHeight }}
         className="rte-content w-full p-6 bg-white rounded-2xl border border-slate-200 outline-none focus:border-[#067F76] text-base leading-relaxed"
