@@ -278,7 +278,7 @@ export default function BlogDetailsClient({ slug }: BlogDetailsClientProps) {
             .article-body h2 {
               font-size: 1.75rem;
               line-height: 1.4;
-              border-bottom: 2px solid #e5e7eb;
+              
               padding-bottom: 0.75rem;
             }
             .article-body h3 {
