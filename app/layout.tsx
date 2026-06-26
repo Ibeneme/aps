@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NavbarWrapper from "@/components/navbar/NavbarWrapper";
 import Footer from "@/components/footer/Footer";
+import ScrollToTop from "./ScrollToTop";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -64,6 +65,7 @@ export default function RootLayout({
       <body className="min-h-screen flex flex-col bg-[#F8FAF9] text-slate-900">
         {/* HelmetProvider removed: Next.js handles head tags automatically */}
         <NavbarWrapper />
+        <ScrollToTop />
         <main className="flex-1">{children}</main>
         <Footer />
       </body>

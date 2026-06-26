@@ -77,6 +77,7 @@ const BlogCard: React.FC<{
       <span className="absolute top-4 left-4 bg-white/90 px-3 py-1 rounded-full text-[10px] font-bold uppercase text-[#023B37]">
         {post.category}
       </span>
+      
 
       {/* {isAdmin && (
         <button
