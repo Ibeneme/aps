@@ -2,7 +2,16 @@
 
 import Image from "next/image";
 import logo from "../../assests/images/logo_a.png";
-import { ArrowUp, Mail, Phone, MapPin, MessageSquareHeart } from "lucide-react";
+import {
+  ArrowUp,
+  Mail,
+  Phone,
+  MapPin,
+  MessageSquareHeart,
+  // Facebook,
+  // Instagram,
+  // Linkedin,
+} from "lucide-react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -109,19 +118,25 @@ export default function Footer() {
             </h4>
             <div className="flex flex-col space-y-2.5 text-xs sm:text-sm font-light text-slate-300">
               <a
-                href="#facebook"
+                href="https://www.facebook.com/share/17uZ6LCD9b/?mibextid=wwXIfr"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex items-center gap-2.5 hover:text-white transition-colors duration-200 w-fit"
               >
                 <span>Facebook</span>
               </a>
               <a
-                href="#instagram"
+                href="https://www.instagram.com/ariadpsych"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex items-center gap-2.5 hover:text-white transition-colors duration-200 w-fit"
               >
                 <span>Instagram</span>
               </a>
               <a
-                href="#linkedin"
+                href="https://www.linkedin.com/company/ariad-psycholgical-services-pllc/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex items-center gap-2.5 hover:text-white transition-colors duration-200 w-fit"
               >
                 <span>LinkedIn</span>
