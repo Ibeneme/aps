@@ -78,7 +78,7 @@ const BlogCard: React.FC<{
         {post.category}
       </span>
 
-      {isAdmin && (
+      {/* {isAdmin && (
         <button
           onClick={() => onInitiateDelete(post.id, post.title)}
           disabled={isDeleting}
@@ -91,7 +91,7 @@ const BlogCard: React.FC<{
             <Trash2 size={18} />
           )}
         </button>
-      )}
+      )} */}
     </div>
 
     <div className="p-8">
@@ -262,7 +262,7 @@ export default function BlessingAttorneyBlog() {
               Clinical insights, parenting wisdom, and honest conversations.
             </p>
 
-            {isAdmin && (
+            {/* {isAdmin && (
               <div className="mt-10">
                 <Link
                   href="/blog/create"
@@ -272,7 +272,7 @@ export default function BlessingAttorneyBlog() {
                   <ArrowRight />
                 </Link>
               </div>
-            )}
+            )} */}
           </div>
         </section>
 
