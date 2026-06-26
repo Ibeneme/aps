@@ -37,7 +37,7 @@ export default function Home() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "MedicalBusiness",
-    name: "Dallas, , TX. Professional psychological and neuropsychological assessment services in Texas",
+    name: "Dallas, TX",
     description:
       "Professional psychological and neuropsychological assessment services in Texas.",
     url: process.env.NEXT_PUBLIC_SITE_URL,
