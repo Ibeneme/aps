@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     "autism testing houston",
     "adhd evaluation texas",
     "psychoeducational assessment",
-    "neuropsychological testing",
+    "neuropsychological testing ",
   ],
 };
 
@@ -37,7 +37,7 @@ export default function Home() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "MedicalBusiness",
-    name: "ARIAD Psychological Services, PLLC",
+    name: "Dallas, , TX. Professional psychological and neuropsychological assessment services in Texas",
     description:
       "Professional psychological and neuropsychological assessment services in Texas.",
     url: process.env.NEXT_PUBLIC_SITE_URL,

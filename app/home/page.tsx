@@ -12,7 +12,7 @@ export default function HomePageView() {
   return (
     <>
       <SEO
-        title="Expert Neuro Psychological evaluations"
+        title="ARIAD Psychological Services, PLLC"
         description="Expert neuropsychological evaluations and holistic mental health care in Dallas. Bridging cognitive roots and emotional well-being with compassionate, comprehensive care."
         keywords="neuropsychological evaluation, psychological services, mental health Dallas, cognitive assessment, holistic therapy, child psychology, family therapy"
       />
