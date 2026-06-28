@@ -75,7 +75,7 @@ export default function Hero() {
               "delay-500"
             )} text-base sm:text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-8 sm:mb-12 leading-relaxed font-light`}
           >
-            Comprehensive psychological, neurological, and psychoeducational
+            Comprehensive psychological and psychoeducational
             services in Dallas, TX — supporting individuals and families with
             dignity and expertise.
           </p>

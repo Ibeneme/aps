@@ -123,7 +123,7 @@ export default function LearningSupportPage() {
               className="absolute left-4 top-4 w-5/6 aspect-[4/5] rounded-[2rem] overflow-hidden border-4 border-[#012321] shadow-2xl z-20"
             >
               <Image
-                src="https://images.unsplash.com/photo-1541976844346-f18aeac57b06?q=80&w=1035&auto=format&fit=crop"
+                src="https://images.unsplash.com/photo-1604881991720-f91add269bed?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 alt="Comfortable family learning space"
                 fill
                 className="object-cover"

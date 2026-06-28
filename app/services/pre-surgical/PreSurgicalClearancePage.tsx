@@ -19,28 +19,29 @@ import {
   Search,
   Activity,
   Heart,
+  Stethoscope,
 } from "lucide-react";
 
-export default function LearningClarityPage() {
+export default function PreSurgicalClearancePage() {
   const [activeStep, setActiveStep] = useState(0);
   const scrollTriggerConfig = { once: true, margin: "-100px" };
 
   const specializations = [
     {
-      title: "Focus & Attention Support",
-      desc: "Understanding patterns around concentration, organization, and completing daily tasks.",
+      title: "Bariatric Surgery Evaluations",
+      desc: "Comprehensive psychological assessment to determine readiness and optimize outcomes for weight-loss surgery.",
     },
     {
-      title: "Memory & Thinking Style",
-      desc: "Exploring how information is remembered, processed, and used in everyday situations.",
+      title: "Spinal Cord Stimulator & Pain Pump Clearance",
+      desc: "Detailed evaluation for patients considering spinal procedures and implantable pain management devices.",
     },
     {
-      title: "Learning Differences",
-      desc: "Identifying unique learning styles to help with school, college, or work adjustments.",
+      title: "Spine Surgery Clearance",
+      desc: "Pre-operative psychological assessment to identify risks and support successful recovery.",
     },
     {
-      title: "Overall Learning Balance",
-      desc: "Understanding the connection between focus, emotional energy, and daily performance.",
+      title: "Other Major Surgeries",
+      desc: "Evaluations for organ transplants, amputations, gender confirmation, and other complex procedures.",
     },
   ];
 
@@ -48,27 +49,27 @@ export default function LearningClarityPage() {
     {
       icon: Search,
       phase: "Phase 1",
-      title: "Initial Conversation",
-      desc: "We spend relaxed time discussing your experiences, daily routines, and the areas where you or your child want more clarity and support.",
+      title: "Initial Consultation",
+      desc: "We begin with a thorough, compassionate interview to understand your medical history, expectations, and any psychological factors relevant to the upcoming procedure.",
     },
     {
       icon: Activity,
       phase: "Phase 2",
-      title: "Interactive Activities",
-      desc: "We use engaging puzzles, tasks, and real-world style activities to better understand thinking patterns, focus, and learning preferences.",
+      title: "Comprehensive Assessment",
+      desc: "Standardized testing and clinical evaluation to assess emotional readiness, coping strategies, and potential risk factors that could impact surgical outcomes.",
     },
     {
       icon: Award,
       phase: "Phase 3",
-      title: "Results & Next Steps",
-      desc: "You receive a clear, easy-to-understand summary. We review practical ideas for school, work, or home strategies that can help moving forward.",
+      title: "Results & Recommendations",
+      desc: "You receive a detailed, clear report with findings, clearance status, and personalized recommendations. We also provide guidance for post-surgical mental health support.",
     },
   ];
 
   return (
     <section
       className="bg-[#FCFAF7] text-[#112421] antialiased overflow-hidden selection:bg-[#067F76]/20"
-      id="learning-clarity"
+      id="pre-surgical-clearance"
     >
       {/* Editorial Gallery Split Hero */}
       <div className="relative min-h-[90vh] flex items-center bg-[#012321] text-white pt-28 pb-20">
@@ -80,22 +81,22 @@ export default function LearningClarityPage() {
           <div className="lg:col-span-7 space-y-6">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[#67E8D6] text-xs font-bold uppercase tracking-wider">
               <MapPin className="w-3.5 h-3.5" />
-              Dallas Learning Support
+              Dallas Pre-Surgical Evaluations
             </div>
 
             <div className="text-white/60 font-semibold text-xs uppercase tracking-widest">
-              Services / Support Sessions
+              Services / Medical Clearance
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1]">
-              Better Understanding. <br />
-              <span className="text-[#67E8D6]">Clearer Path Forward.</span>
+              Pre-Surgical Medical <br />
+              <span className="text-[#67E8D6]">Clearance Evaluations</span>
             </h1>
 
             <p className="text-base sm:text-lg text-slate-300 max-w-xl font-normal leading-relaxed">
-              Explore how you or your child thinks, focuses, and learns. We
-              offer welcoming, thoughtful sessions to bring clarity and
-              practical support for all ages across Dallas.
+              Expert psychological evaluations to determine surgical readiness,
+              identify potential risks, and support the best possible outcomes
+              for bariatric, spinal, and other major procedures.
             </p>
 
             <div className="pt-4 flex flex-wrap gap-4">
@@ -103,7 +104,7 @@ export default function LearningClarityPage() {
                 href="/contact"
                 className="bg-white text-[#012321] hover:bg-slate-100 px-6 py-3.5 rounded-xl font-bold text-sm transition-all shadow-lg"
               >
-                View Transparent Pricing
+                Get Evaluated Today
               </a>
               <a
                 href="/contact"
@@ -125,8 +126,8 @@ export default function LearningClarityPage() {
               className="absolute left-4 top-4 w-5/6 aspect-[4/5] rounded-[2rem] overflow-hidden border-4 border-[#012321] shadow-2xl z-20"
             >
               <Image
-                src="https://images.unsplash.com/photo-1687547721091-45d8c1a77cb0?q=80&w=1869&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt="Comfortable learning space"
+                src="https://images.unsplash.com/photo-1666362755385-1856fca1a330?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="Professional medical consultation"
                 fill
                 className="object-cover"
                 priority
@@ -142,9 +143,10 @@ export default function LearningClarityPage() {
               className="absolute right-0 bottom-4 w-1/2 aspect-square rounded-[2rem] overflow-hidden border-4 border-[#012321] shadow-xl z-10 opacity-60 bg-[#067F76]"
             >
               <div className="w-full h-full p-6 flex flex-col justify-end text-white">
-                <Sparkles className="w-8 h-8 text-[#67E8D6] mb-4" />
+                <Stethoscope className="w-8 h-8 text-[#67E8D6] mb-4" />
                 <p className="font-bold text-base leading-snug">
-                  Personalized approach with a warm and supportive feel.
+                  Licensed psychologists ensuring safe, informed surgical
+                  decisions.
                 </p>
               </div>
             </motion.div>
@@ -160,21 +162,22 @@ export default function LearningClarityPage() {
               Our Approach
             </h2>
             <p className="text-3xl font-bold text-[#023B37] tracking-tight">
-              Understanding how we think and learn.
+              Supporting successful surgical outcomes through expert
+              psychological evaluation.
             </p>
           </div>
           <div className="md:col-span-7 space-y-4">
             <p className="text-slate-600 font-normal text-base leading-relaxed">
-              At Ariad Support Services, we offer thoughtful learning
-              exploration sessions in Dallas. These help children, teens, and
-              adults gain clearer insight into their unique thinking styles,
-              strengths, and growth areas.
+              At Ariad, we provide thorough pre-surgical psychological
+              evaluations conducted or directly supervised by licensed
+              psychologists with expertise in pain management and medical
+              psychology.
             </p>
             <p className="text-slate-600 font-normal text-base leading-relaxed">
-              Whether you're looking for better focus strategies, learning style
-              insights, or ways to feel more confident in school or daily life,
-              our local team is here to support families across Uptown, Oak
-              Lawn, Lakewood, and Highland Park.
+              Our evaluations help surgical teams determine patient readiness,
+              identify potential challenges, and develop support plans that
+              improve long-term success for procedures including bariatric
+              surgery, spinal interventions, and other complex surgeries.
             </p>
           </div>
         </div>
@@ -184,10 +187,10 @@ export default function LearningClarityPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
         <div className="mb-16">
           <h2 className="text-xs font-bold tracking-widest text-[#067F76] uppercase mb-2">
-            Why Families Choose Us
+            Why Patients Choose Us
           </h2>
           <p className="text-3xl sm:text-5xl font-bold tracking-tight text-[#023B37]">
-            Trusted partners in learning growth
+            Trusted medical psychology partners
           </p>
         </div>
 
@@ -195,23 +198,23 @@ export default function LearningClarityPage() {
           {[
             {
               icon: Users,
-              title: "Experienced Local Team",
-              desc: "Our neighborhood guides bring practical insight into how people learn and thrive in Dallas communities.",
-            },
-            {
-              icon: Activity,
-              title: "Personalized Sessions",
-              desc: "We adapt every step to match your unique experiences and goals.",
-            },
-            {
-              icon: MapPin,
-              title: "Dallas Native Insight",
-              desc: "Helpful, locally relevant guidance for school and everyday life in the Dallas area.",
+              title: "Licensed Experts",
+              desc: "Evaluations performed or supervised by experienced licensed psychologists trained in surgical psychology.",
             },
             {
               icon: ShieldCheck,
-              title: "Safe & Supportive Space",
-              desc: "Every session happens in a warm, confidential environment where you feel respected and heard.",
+              title: "Comprehensive Reports",
+              desc: "Clear, detailed reports provided promptly to you and your surgical team.",
+            },
+            {
+              icon: Heart,
+              title: "Patient-Centered Care",
+              desc: "Compassionate approach focused on your comfort, understanding, and long-term success.",
+            },
+            {
+              icon: MapPin,
+              title: "Dallas-Based",
+              desc: "Convenient in-person and telemedicine options for patients across Texas and nationwide.",
             },
           ].map((item, idx) => (
             <div
@@ -244,7 +247,7 @@ export default function LearningClarityPage() {
                 What to Expect
               </h2>
               <h3 className="text-3xl sm:text-4xl font-bold tracking-tight leading-tight">
-                Our supportive learning journey
+                Our pre-surgical evaluation process
               </h3>
 
               <div className="space-y-3 pt-4">
@@ -309,7 +312,7 @@ export default function LearningClarityPage() {
 
               <div className="flex gap-2 mt-8 pt-4 border-t border-white/10 text-xs text-slate-400 font-medium">
                 <ShieldCheck className="w-3.5 h-3.5 text-[#67E8D6]" />
-                <span>Personalized • Confidential • Practical</span>
+                <span>Confidential • Evidence-Based • Collaborative</span>
               </div>
             </div>
           </div>
@@ -320,10 +323,10 @@ export default function LearningClarityPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <div className="text-center max-w-2xl mx-auto mb-16">
           <h2 className="text-xs font-bold tracking-widest text-[#067F76] uppercase mb-2">
-            Common Areas
+            Our Services
           </h2>
           <p className="text-3xl sm:text-4xl font-bold text-[#023B37] tracking-tight">
-            Areas where families often seek support
+            Procedures we evaluate
           </p>
         </div>
 
@@ -361,19 +364,19 @@ export default function LearningClarityPage() {
               Transparent Pricing
             </div>
             <h3 className="text-3xl sm:text-5xl font-bold text-[#023B37] tracking-tight leading-tight">
-              Straightforward pricing without surprise terms.
+              Clear fees with no hidden costs.
             </h3>
             <p className="text-slate-600 font-normal text-base leading-relaxed">
-              Our learning support sessions include thoughtful activities,
-              observation, and clear guidance. We explain all time commitments
-              upfront so you can plan with confidence.
+              Our pre-surgical evaluations include clinical interview,
+              standardized testing when needed, and a comprehensive written
+              report.
             </p>
 
             <div className="flex items-start gap-3 bg-white/60 p-4 rounded-xl border border-slate-300/50 text-xs text-slate-500 max-w-md">
               <Info className="w-4 h-4 text-[#067F76] shrink-0 mt-0.5" />
               <span>
-                Sessions normally require roughly 8 to 12 total hours, depending
-                on individual needs.
+                Most evaluations are completed in 1–3 sessions depending on the
+                complexity of the procedure.
               </span>
             </div>
           </div>
@@ -381,18 +384,17 @@ export default function LearningClarityPage() {
           <div className="lg:col-span-6">
             <div className="bg-[#023B37] text-white rounded-[2rem] p-8 sm:p-10 space-y-6 shadow-xl relative overflow-hidden">
               <div className="absolute top-0 right-0 p-4 text-xs font-bold uppercase tracking-widest bg-white/10 rounded-bl-xl text-[#67E8D6]">
-                Full Support Package
+                Standard Evaluation
               </div>
 
               <div className="space-y-1">
                 <p className="text-sm uppercase tracking-wider text-slate-300 font-semibold">
-                  Rate Matrix
+                  Starting From
                 </p>
                 <div className="flex items-baseline gap-2">
                   <span className="text-4xl sm:text-5xl font-bold text-white">
-                    $200–$250
+                    $1,200
                   </span>
-                  <span className="text-slate-400 text-sm">/ per hour</span>
                 </div>
               </div>
 
@@ -400,20 +402,24 @@ export default function LearningClarityPage() {
 
               <div className="space-y-3">
                 <p className="text-xs font-bold text-[#67E8D6] uppercase tracking-wider">
-                  What is completely included:
+                  What’s Included:
                 </p>
                 <ul className="space-y-2 text-sm text-slate-200">
                   <li className="flex items-center gap-2.5">
                     <CheckCircle className="w-4 h-4 text-[#67E8D6] shrink-0" />
-                    Initial Conversation & Background Review
+                    Clinical Interview & History Review
                   </li>
                   <li className="flex items-center gap-2.5">
                     <CheckCircle className="w-4 h-4 text-[#67E8D6] shrink-0" />
-                    Interactive Learning Activities
+                    Psychological Testing (as needed)
                   </li>
                   <li className="flex items-center gap-2.5">
                     <CheckCircle className="w-4 h-4 text-[#67E8D6] shrink-0" />
-                    Personal Feedback Meeting & Practical Guide
+                    Comprehensive Written Report
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <CheckCircle className="w-4 h-4 text-[#67E8D6] shrink-0" />
+                    Feedback Session with Recommendations
                   </li>
                 </ul>
               </div>
@@ -423,7 +429,7 @@ export default function LearningClarityPage() {
                   href="/contact"
                   className="w-full text-center block bg-[#67E8D6] hover:bg-[#52d1bf] text-[#012321] font-bold py-3.5 rounded-xl transition-all text-sm"
                 >
-                  Get Started Today
+                  Schedule Your Evaluation
                 </a>
               </div>
             </div>
@@ -444,19 +450,21 @@ export default function LearningClarityPage() {
         >
           <div className="relative z-10 max-w-2xl mx-auto space-y-6">
             <h2 className="text-3xl sm:text-5xl font-bold tracking-tight leading-tight">
-              Gain clarity on your learning journey.
+              Prepare with confidence.
+              <br />
+              Move forward with clarity.
             </h2>
             <p className="text-base sm:text-lg text-slate-300 font-normal leading-relaxed max-w-xl mx-auto">
-              Our team is ready to help you better understand your unique
-              thinking and learning style. Reach out today to schedule a
-              session.
+              Get a professional pre-surgical psychological evaluation from
+              experienced licensed psychologists in Dallas. In-person and
+              telemedicine options available.
             </p>
             <div className="pt-2">
               <a
                 href="/contact"
                 className="inline-flex items-center gap-2.5 bg-gradient-to-r from-[#67E8D6] to-[#067F76] text-white font-semibold px-8 py-4 rounded-xl shadow-lg shadow-[#067F76]/10 transition-all duration-200 hover:brightness-110 hover:-translate-y-0.5 active:scale-98 group"
               >
-                Schedule Your Learning Support Session
+                Book Your Pre-Surgical Evaluation
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform text-white" />
               </a>
             </div>

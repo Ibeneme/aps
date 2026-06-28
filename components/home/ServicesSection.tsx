@@ -39,13 +39,13 @@ export default function ServicesSection() {
       num: "01",
       title: "Psychological Testing & ADHD Assessment",
       description:
-        "Our clinical frameworks help accurately diagnose and treat a variety of emotional and mental health concerns such as anxiety, depression, ADHD, and stress management. We provide evidence-based insights to support long-term psychological growth.",
+        "Our  frameworks help accurately diagnose and treat a variety of emotional and mental health concerns such as anxiety, depression, ADHD, and stress management. We provide evidence-based insights to support long-term psychological growth.",
       icon: <Sparkles className="w-5 h-5 sm:w-6 sm:h-6" />,
       href: "#psychological-testing",
       bgStyle: "bg-white",
       iconAccent: "text-[#067F76] bg-[#067F76]/10",
       imageAlt:
-        "Clinical psychological testing setting with structured evaluation tools",
+        "Psychological testing setting with structured evaluation tools",
       imageUrl: serv1,
     },
     {
@@ -84,7 +84,7 @@ export default function ServicesSection() {
       bgStyle: "bg-white",
       iconAccent: "text-[#067F76] bg-[#067F76]/10",
       imageAlt:
-        "Comforting and inclusive clinical observation setting representing neurodivergent clarity",
+        "Comforting and inclusive observation setting representing neurodivergent clarity",
       imageUrl: serv4,
     },
   ];

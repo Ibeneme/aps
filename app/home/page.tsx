@@ -4,7 +4,7 @@ import HomeView from "@/components/home/Hero";
 import PhilosophicalThread from "@/components/home/PhilosophicalThread";
 import ScheduleSection from "@/components/home/ScheduleSection";
 import ServicesSection from "@/components/home/ServicesSection";
-import AnimatedTestimonialsSection from "@/components/home/Testimonial";
+//import AnimatedTestimonialsSection from "@/components/home/Testimonial";
 import WhyChooseUsSection from "@/components/home/WhyChooseUsSection";
 import SEO from "@/components/SEO"; // ← Added SEO Import
 
@@ -22,7 +22,7 @@ export default function HomePageView() {
         <PhilosophicalThread />
         <ServicesSection />
         <WhyChooseUsSection />
-        <AnimatedTestimonialsSection />
+        {/* <AnimatedTestimonialsSection /> */}
         <ScheduleSection />
       </div>
     </>

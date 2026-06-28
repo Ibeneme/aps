@@ -117,7 +117,7 @@ export default function LearningClarityPage() {
           <div className="lg:col-span-6 relative w-full h-[500px] flex items-center justify-end">
             <div className="absolute right-0 top-0 w-11/12 h-[90%] rounded-2xl overflow-hidden shadow-xl border border-slate-200">
               <Image
-                src="https://images.unsplash.com/photo-1541976844346-f18aeac57b06?q=80&w=1035&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                src="https://images.unsplash.com/photo-1638443436690-db587cc66f12?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 alt="Comfortable and supportive learning space"
                 fill
                 className="object-cover grayscale-[25%] contrast-[105%]"

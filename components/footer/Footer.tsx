@@ -79,7 +79,7 @@ export default function Footer() {
           <div className="md:col-span-4 space-y-3.5">
             <h4 className="text-xs font-bold uppercase tracking-widest text-[#D6C1A0] flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[#067F76]" />
-              Dallas Clinic
+              Dallas 
             </h4>
             <ul className="space-y-2.5 text-xs sm:text-sm font-light text-slate-300">
               <li className="flex items-start gap-2">
@@ -152,7 +152,7 @@ export default function Footer() {
               &copy; {currentYear} ARIAD Psychological Services. All rights
               reserved.
             </p>
-            <div className="flex flex-wrap justify-center sm:justify-start gap-x-4 gap-y-1 text-[10px] uppercase tracking-wider text-slate-400 font-bold">
+            {/* <div className="flex flex-wrap justify-center sm:justify-start gap-x-4 gap-y-1 text-[10px] uppercase tracking-wider text-slate-400 font-bold">
               <a
                 href="#privacy"
                 className="hover:text-white transition-colors duration-200"
@@ -167,13 +167,8 @@ export default function Footer() {
                 Terms of Service
               </a>
               <span className="text-white/10 hidden sm:inline">|</span>
-              <a
-                href="#disclaimer"
-                className="hover:text-white transition-colors duration-200"
-              >
-                Clinical Disclaimer
-              </a>
-            </div>
+        
+            </div> */}
           </div>
 
           {/* Scroll-To-Top Trigger */}

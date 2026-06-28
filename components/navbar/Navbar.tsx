@@ -207,6 +207,27 @@ export default function Navbar() {
             </svg>
           ),
         },
+        {
+          title: "Pre-Surgical Medical Clearance Evaluations",
+          description:
+            "Comprehensive medical and psychological evaluations for surgical readiness and optimal outcomes.",
+          href: "/services/pre-surgical",
+          icon: (
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M19 21V5a2 2 0 01-2-2H7a2 2 0 01-2 2v16m7-13h2m-2 4h2m-6 4h.01M9 19h6a2 2 0 002-2V9a2 2 0 00-2-2H9a2 2 0 00-2 2v8a2 2 0 002 2z"
+              />
+            </svg>
+          ),
+        },
       ],
     },
     { name: "Blog", href: "/blog", hasDropdown: false },
@@ -220,6 +241,32 @@ export default function Navbar() {
           description:
             "Our main comfortable therapeutic facility in Dallas, Texas.",
           href: "/locations/dallas-hq",
+          icon: (
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25s-7.5-4.108-7.5-11.25a7.5 7.5 0 1115 0z"
+              />
+            </svg>
+          ),
+        },
+        {
+          title: "Houston Office",
+          description:
+            "Our growing location serving the Greater Houston area with the same high standard of care.",
+          href: "/locations/houston",
           icon: (
             <svg
               className="w-5 h-5"

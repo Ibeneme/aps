@@ -29,7 +29,7 @@ const coreValues = [
   {
     icon: Brain,
     title: "Evidence-Based Insights",
-    desc: "We combine standard clinical research practices with customized diagnostics to truly understand the mind's inner workings.",
+    desc: "We combine standard Neurodivergent affiriming practices with customized diagnostics to truly understand the mind's inner workings.",
     color: "bg-[#023B37]/10 text-[#023B37]",
   },
   {
@@ -55,7 +55,7 @@ const faqs = [
   {
     id: "faq-1",
     q: "How long does testing take, and what’s the process?",
-    a: "Testing typically involves 1–3 sessions (2–6 hours total), including clinical interviews, standardized testing batteries, and a comprehensive feedback meeting. A detailed report with diagnoses and highly specific recommendations is delivered within a few weeks.",
+    a: "Testing typically involves just a session (2–6 hours total), including clinical interviews, standardized testing batteries, and a comprehensive feedback meeting. A detailed report with diagnoses and highly specific recommendations is delivered within a few weeks.",
   },
   {
     id: "faq-2",
@@ -150,8 +150,8 @@ export default function AboutUs() {
               className="max-w-3xl mx-auto text-lg sm:text-xl text-emerald-100/70 font-light leading-relaxed"
             >
               Meet the dedicated, multi-disciplinary clinicians combining
-              cutting-edge clinical research with deep empathy to help your
-              family thrive.
+              cutting-edge Neurodivergent affiriming with deep empathy to help
+              your family thrive.
             </motion.p>
           </div>
         </section>
@@ -194,7 +194,7 @@ export default function AboutUs() {
               Our Foundation
             </span>
             <h2 className="text-3xl sm:text-5xl font-black text-[#023B37]">
-              The Medical Experts
+              The Clinical Experts
             </h2>
           </div>
 

@@ -82,8 +82,7 @@ export default function WhyChooseUsSection() {
             <div className="w-20 h-1 bg-gradient-to-r from-[#067F76] to-[#D6C1A0] rounded-full pt-1" />
             <p className="text-slate-600 text-xs sm:text-sm lg:text-base font-light leading-relaxed">
               We stand dedicated to providing expert care and gold-standard
-              diagnostic insights right here in Dallas, TX. Our frameworks
-              combine deep clinical knowledge with compassionate attention to
+              diagnostic insights right here in Dallas, TX, with compassionate attention to
               detail.
             </p>
           </div>
