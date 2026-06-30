@@ -309,7 +309,7 @@ export default function AboutUs() {
             </motion.div>
 
             {/* Aguese Ibie */}
-            <motion.div
+            {/* <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
@@ -360,7 +360,7 @@ export default function AboutUs() {
                   outreach opportunities are encouraged to reach out.
                 </p>
               </div>
-            </motion.div>
+            </motion.div> */}
           </div>
         </section>
 
