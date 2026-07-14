@@ -16,7 +16,7 @@ export default function Footer() {
       <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-[#067F76]/10 blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12 relative z-10">
-        {/* TOP ROW - Mission + CTA */}
+        {/* TOP ROW */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-12 border-b border-white/10 items-start">
           <div className="lg:col-span-7 space-y-4">
             <div className="flex items-center gap-3">
@@ -56,10 +56,10 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* LOCATIONS ROW */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 md:gap-8 pt-12 pb-12 border-b border-white/10">
+        {/* LOCATIONS ROW - Fixed Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-12 gap-10 md:gap-8 pt-12 pb-12 border-b border-white/10">
           {/* Dallas */}
-          <div className="md:col-span-5 lg:col-span-4 space-y-3.5">
+          <div className="md:col-span-1 lg:col-span-4 space-y-3.5">
             <h4 className="text-xs font-bold uppercase tracking-widest text-[#D6C1A0] flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[#067F76]" />
               Dallas
@@ -67,11 +67,7 @@ export default function Footer() {
             <ul className="space-y-2.5 text-xs sm:text-sm font-light text-slate-300">
               <li className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 text-[#067F76] shrink-0 mt-0.5" />
-                <span>
-                  4131 N Central Expy Suite 900,
-                  <br />
-                  Dallas, TX 75204
-                </span>
+                <span>4131 N Central Expy Suite 900, Dallas, TX 75204</span>
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-[#067F76] shrink-0" />
@@ -82,20 +78,11 @@ export default function Footer() {
                   (469) 733-9976
                 </a>
               </li>
-              <li className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-[#067F76] shrink-0" />
-                <a
-                  href="mailto:info@ariadpsychservices.com"
-                  className="hover:text-white transition-colors break-all"
-                >
-                  info@ariadpsychservices.com
-                </a>
-              </li>
             </ul>
           </div>
 
-          {/* Houston - NEW ADDRESS */}
-          <div className="md:col-span-5 lg:col-span-4 space-y-3.5">
+          {/* Houston */}
+          <div className="md:col-span-1 lg:col-span-4 space-y-3.5">
             <h4 className="text-xs font-bold uppercase tracking-widest text-[#D6C1A0] flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[#067F76]" />
               Houston
@@ -103,11 +90,7 @@ export default function Footer() {
             <ul className="space-y-2.5 text-xs sm:text-sm font-light text-slate-300">
               <li className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 text-[#067F76] shrink-0 mt-0.5" />
-                <span>
-                  5718 Westheimer Rd. Suite 1000,
-                  <br />
-                  Houston, TX 77057
-                </span>
+                <span>5718 Westheimer Rd. Suite 1000, Houston, TX 77057</span>
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-[#067F76] shrink-0" />
@@ -118,20 +101,11 @@ export default function Footer() {
                   (469) 733-9976
                 </a>
               </li>
-              <li className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-[#067F76] shrink-0" />
-                <a
-                  href="mailto:info@ariadpsychservices.com"
-                  className="hover:text-white transition-colors break-all"
-                >
-                  info@ariadpsychservices.com
-                </a>
-              </li>
             </ul>
           </div>
 
           {/* Social Links */}
-          <div className="md:col-span-2 lg:col-span-4 space-y-3.5">
+          <div className="md:col-span-1 lg:col-span-4 space-y-3.5">
             <h4 className="text-xs font-bold uppercase tracking-widest text-[#D6C1A0]">
               Follow Profiles
             </h4>
@@ -166,18 +140,14 @@ export default function Footer() {
 
         {/* BOTTOM ROW */}
         <div className="mt-12 flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div className="text-center sm:text-left space-y-1">
-            <p className="text-slate-400 text-[11px] font-light">
-              © {currentYear} ARIAD Psychological Services. All rights reserved.
-            </p>
-          </div>
-
+          <p className="text-slate-400 text-[11px] font-light">
+            © {currentYear} ARIAD Psychological Services. All rights reserved.
+          </p>
           <button
             onClick={scrollToTop}
-            className="p-3.5 rounded-xl bg-white/5 border border-white/10 text-white hover:text-[#023B37] hover:bg-[#D6C1A0] hover:border-[#D6C1A0] transition-all duration-300 active:scale-95 group"
-            aria-label="Back to top"
+            className="p-3.5 rounded-xl bg-white/5 border border-white/10 text-white hover:text-[#023B37] hover:bg-[#D6C1A0] transition-all duration-300"
           >
-            <ArrowUp className="w-4 h-4 transform group-hover:-translate-y-0.5 transition-transform duration-300" />
+            <ArrowUp className="w-4 h-4" />
           </button>
         </div>
       </div>
