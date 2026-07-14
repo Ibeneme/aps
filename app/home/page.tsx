@@ -19,14 +19,25 @@ export default function HomePageView() {
     telephone: "+14697339976",
     email: "info@ariadpsychservices.com",
     medicalSpecialty: "Psychiatric",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "4131 N Central Expy Suite 900",
-      addressLocality: "Dallas",
-      addressRegion: "TX",
-      postalCode: "75204",
-      addressCountry: "US",
-    },
+    address: [
+      {
+        "@type": "PostalAddress",
+        streetAddress: "4131 N Central Expy Suite 900",
+        addressLocality: "Dallas",
+        addressRegion: "TX",
+        postalCode: "75204",
+        addressCountry: "US",
+      },
+      {
+        "@type": "PostalAddress",
+        streetAddress: "5718 Westheimer Rd. Suite 1000",
+        addressLocality: "Houston",
+        addressRegion: "TX",
+        postalCode: "77057",
+        addressCountry: "US",
+      },
+    ],
+    areaServed: ["Dallas", "Houston", "Texas"],
     sameAs: [
       "https://www.facebook.com/share/17uZ6LCD9b/?mibextid=wwXIfr",
       "https://www.instagram.com/ariadpsych",

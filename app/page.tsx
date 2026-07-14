@@ -37,19 +37,60 @@ export default function Home() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "MedicalBusiness",
-    name: "Dallas, TX",
-    description:
-      "Professional psychological and neuropsychological assessment services in Texas.",
-    url: process.env.NEXT_PUBLIC_SITE_URL,
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "4131 N Central Expy Suite 900",
-      addressLocality: "Dallas",
-      addressRegion: "TX",
-      postalCode: "75204",
-    },
-    telephone: "(469) 733-9976",
+    name: "ARIAD Psychological Services",
+    url: "https://ariadpsychservices.com",
+    logo: "https://ariadpsychservices.com/favicon.png", // Ensure this points to your absolute image URL
+    image: "https://ariadpsychservices.com/favicon.png",
+    telephone: "+14697339976",
+    email: "info@ariadpsychservices.com",
+    medicalSpecialty: ["Psychiatric", "ClinicalPsychology", "Neuropsychology"],
+    priceRange: "$$",
+    address: [
+      {
+        "@type": "PostalAddress",
+        streetAddress: "4131 N Central Expy Suite 900",
+        addressLocality: "Dallas",
+        addressRegion: "TX",
+        postalCode: "75204",
+        addressCountry: "US",
+      },
+      {
+        "@type": "PostalAddress",
+        streetAddress: "5718 Westheimer Rd. Suite 1000",
+        addressLocality: "Houston",
+        addressRegion: "TX",
+        postalCode: "77057",
+        addressCountry: "US",
+      },
+    ],
+    geo: [
+      {
+        "@type": "GeoCoordinates",
+        latitude: "32.8105", // Approximate coordinates for Dallas office
+        longitude: "-96.7766",
+      },
+      {
+        "@type": "GeoCoordinates",
+        latitude: "29.7375", // Approximate coordinates for Houston office
+        longitude: "-95.4800",
+      },
+    ],
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        opens: "09:00",
+        closes: "17:00",
+      },
+    ],
     areaServed: ["Dallas", "Houston", "Texas"],
+    sameAs: [
+      "https://www.facebook.com/share/17uZ6LCD9b/?mibextid=wwXIfr",
+      "https://www.instagram.com/ariadpsych",
+      "https://www.linkedin.com/company/ariad-psycholgical-services-pllc/",
+    ],
+    hasMap:
+      "https://www.google.com/maps/search/?api=1&query=ARIAD+Psychological+Services+Dallas+Houston",
   };
 
   return (
