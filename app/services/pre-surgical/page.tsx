@@ -1,7 +1,7 @@
+// app/services/pre-surgical/page.tsx
 import { Metadata } from "next";
 import PreSurgicalClearancePage from "./PreSurgicalClearancePage";
 
-// 1. Service-Focused SEO Metadata
 export const metadata: Metadata = {
   title: "Pre-Surgical Medical Clearance Evaluations in Dallas | ARIAD",
   description:
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://ariadpsychservices.com/og-pre-surgical.jpg", // Update with your actual image
+        url: "https://ariadpsychservices.com/images/og-pre-surgical.jpg",
         width: 1200,
         height: 630,
         alt: "Pre-Surgical Medical Clearance Evaluation",
@@ -37,61 +37,42 @@ export const metadata: Metadata = {
 };
 
 export default function PreSurgicalClearancePageWrapper() {
-  // 2. Structured Data for Medical Service
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "MedicalProcedure",
-    name: "Pre-Surgical Medical Clearance Evaluations",
+    "@type": "MedicalService",
+    name: "Pre-Surgical Psychological Clearance Evaluations",
     provider: {
       "@type": "MedicalBusiness",
       name: "ARIAD Psychological Services",
       url: "https://ariadpsychservices.com",
+      telephone: "+1-469-733-9976",
       address: {
         "@type": "PostalAddress",
+        streetAddress: "4131 N Central Expy, Suite 900",
         addressLocality: "Dallas",
         addressRegion: "TX",
+        postalCode: "75204",
         addressCountry: "US",
       },
     },
-    areaServed: {
-      "@type": "City",
-      name: "Dallas",
-    },
+    areaServed: [
+      { "@type": "City", name: "Dallas" },
+      { "@type": "City", name: "Houston" },
+    ],
     description:
-      "Comprehensive psychological evaluations for surgical readiness including bariatric surgery, spinal procedures, pain management implants, and other major surgeries. Conducted by licensed psychologists.",
+      "Comprehensive psychological evaluations for surgical readiness including bariatric surgery, spinal procedures, pain management implants, and other major surgeries.",
     serviceType: "Pre-Surgical Psychological Evaluation",
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: "Pre-Surgical Clearance Services",
       itemListElement: [
+        { "@type": "Offer", name: "Bariatric Surgery Evaluations" },
         {
           "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Bariatric Surgery Evaluations",
-          },
+          name: "Spinal Cord Stimulator & Pain Pump Clearance",
         },
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Spinal Cord Stimulator & Pain Pump Clearance",
-          },
-        },
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Spine Surgery Psychological Clearance",
-          },
-        },
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Other Major Surgery Evaluations",
-          },
-        },
+        { "@type": "Offer", name: "Spine Surgery Psychological Clearance" },
+        { "@type": "Offer", name: "Other Major Surgery Evaluations" },
       ],
     },
   };
@@ -102,7 +83,6 @@ export default function PreSurgicalClearancePageWrapper() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-
       <PreSurgicalClearancePage />
     </>
   );

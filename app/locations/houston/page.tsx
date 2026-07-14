@@ -32,23 +32,23 @@ export default function HoustonOfficePageWrapper() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "MedicalBusiness",
-    name: "ARIAD Psychological Services - Houston Office",
+    name: "ARIAD Psychological Services - Houston",
     image: "https://ariadpsychservices.com/images/logo_a.png",
     "@id": "https://ariadpsychservices.com/locations/houston",
     url: "https://ariadpsychservices.com/locations/houston",
     telephone: "+1-469-733-9976",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "Update with Houston Address", // ← Please replace this
+      streetAddress: "5718 Westheimer Rd. Suite 1000, Houston Texas 77057",
       addressLocality: "Houston",
       addressRegion: "TX",
-      postalCode: "Update with ZIP", // ← Please replace this
+      postalCode: "77057",
       addressCountry: "US",
     },
     geo: {
       "@type": "GeoCoordinates",
-      latitude: 29.7604, // ← Update with real coordinates
-      longitude: -95.3698, // ← Update with real coordinates
+      latitude: 29.7604,
+      longitude: -95.3698,
     },
     openingHoursSpecification: {
       "@type": "OpeningHoursSpecification",

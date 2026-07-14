@@ -2,16 +2,7 @@
 
 import Image from "next/image";
 import logo from "../../assests/images/logo_a.png";
-import {
-  ArrowUp,
-  Mail,
-  Phone,
-  MapPin,
-  MessageSquareHeart,
-  // Facebook,
-  // Instagram,
-  // Linkedin,
-} from "lucide-react";
+import { ArrowUp, Mail, Phone, MapPin, MessageSquareHeart } from "lucide-react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -22,24 +13,19 @@ export default function Footer() {
 
   return (
     <footer className="bg-[#022A27] border-t border-white/10 text-white relative overflow-hidden">
-      {/* Structural Ambient Background Glow */}
       <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-[#067F76]/10 blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12 relative z-10">
-        {/* --- TOP ROW: MISSION NARRATIVE & MOTIVATIONAL CTA --- */}
+        {/* TOP ROW - Mission + CTA */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-12 border-b border-white/10 items-start">
-          {/* Mission Content Column */}
           <div className="lg:col-span-7 space-y-4">
             <div className="flex items-center gap-3">
               <Image
                 src={logo}
                 alt="ARIAD Psychological Services Logo"
-                className="h-14 w-auto object-contain "
+                className="h-14 w-auto object-contain"
                 priority
               />
-              <span className="text-lg sm:text-xl font-black tracking-wider uppercase sr-only">
-                ARIAD Psychological Services
-              </span>
             </div>
             <p className="text-slate-300 text-xs sm:text-sm font-light leading-relaxed max-w-2xl">
               At ARIAD Psychological Services, our mission is to empower
@@ -50,7 +36,6 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Let's Talk CTA Box */}
           <div className="lg:col-span-5 p-6 rounded-[1.5rem] bg-white/5 border border-white/10 space-y-3">
             <div className="flex items-center gap-2 text-[#D6C1A0]">
               <MessageSquareHeart className="w-4 h-4" />
@@ -62,24 +47,22 @@ export default function Footer() {
               Don’t wait for tomorrow—invest in your well-being today. You
               deserve it.
             </p>
-            <div className="pt-1">
-              <a
-                href="/contact"
-                className="inline-flex px-4 py-2 bg-white hover:bg-[#D6C1A0] text-[#023B37] hover:text-slate-900 font-bold text-[11px] uppercase tracking-wider rounded-lg transition-all duration-300"
-              >
-                Get In Touch
-              </a>
-            </div>
+            <a
+              href="/contact"
+              className="inline-flex px-4 py-2 bg-white hover:bg-[#D6C1A0] text-[#023B37] hover:text-slate-900 font-bold text-[11px] uppercase tracking-wider rounded-lg transition-all duration-300"
+            >
+              Get In Touch
+            </a>
           </div>
         </div>
 
-        {/* --- MIDDLE ROW: MULTI-CITY LOCATIONS & SOCIALS --- */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-8 pt-12 pb-12 border-b border-white/10">
-          {/* Location 1: Dallas */}
-          <div className="md:col-span-4 space-y-3.5">
+        {/* LOCATIONS ROW */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 md:gap-8 pt-12 pb-12 border-b border-white/10">
+          {/* Dallas */}
+          <div className="md:col-span-5 lg:col-span-4 space-y-3.5">
             <h4 className="text-xs font-bold uppercase tracking-widest text-[#D6C1A0] flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[#067F76]" />
-              Dallas 
+              Dallas
             </h4>
             <ul className="space-y-2.5 text-xs sm:text-sm font-light text-slate-300">
               <li className="flex items-start gap-2">
@@ -94,7 +77,7 @@ export default function Footer() {
                 <Phone className="w-4 h-4 text-[#067F76] shrink-0" />
                 <a
                   href="tel:4697339976"
-                  className="hover:text-white transition-colors duration-200"
+                  className="hover:text-white transition-colors"
                 >
                   (469) 733-9976
                 </a>
@@ -103,7 +86,7 @@ export default function Footer() {
                 <Mail className="w-4 h-4 text-[#067F76] shrink-0" />
                 <a
                   href="mailto:info@ariadpsychservices.com"
-                  className="hover:text-white transition-colors duration-200 break-all"
+                  className="hover:text-white transition-colors break-all"
                 >
                   info@ariadpsychservices.com
                 </a>
@@ -111,8 +94,44 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Social Network Tracks */}
-          <div className="md:col-span-3 space-y-3.5">
+          {/* Houston - NEW ADDRESS */}
+          <div className="md:col-span-5 lg:col-span-4 space-y-3.5">
+            <h4 className="text-xs font-bold uppercase tracking-widest text-[#D6C1A0] flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#067F76]" />
+              Houston
+            </h4>
+            <ul className="space-y-2.5 text-xs sm:text-sm font-light text-slate-300">
+              <li className="flex items-start gap-2">
+                <MapPin className="w-4 h-4 text-[#067F76] shrink-0 mt-0.5" />
+                <span>
+                  5718 Westheimer Rd. Suite 1000,
+                  <br />
+                  Houston, TX 77057
+                </span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Phone className="w-4 h-4 text-[#067F76] shrink-0" />
+                <a
+                  href="tel:4697339976"
+                  className="hover:text-white transition-colors"
+                >
+                  (469) 733-9976
+                </a>
+              </li>
+              <li className="flex items-center gap-2">
+                <Mail className="w-4 h-4 text-[#067F76] shrink-0" />
+                <a
+                  href="mailto:info@ariadpsychservices.com"
+                  className="hover:text-white transition-colors break-all"
+                >
+                  info@ariadpsychservices.com
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Social Links */}
+          <div className="md:col-span-2 lg:col-span-4 space-y-3.5">
             <h4 className="text-xs font-bold uppercase tracking-widest text-[#D6C1A0]">
               Follow Profiles
             </h4>
@@ -121,60 +140,41 @@ export default function Footer() {
                 href="https://www.facebook.com/share/17uZ6LCD9b/?mibextid=wwXIfr"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2.5 hover:text-white transition-colors duration-200 w-fit"
+                className="hover:text-white transition-colors"
               >
-                <span>Facebook</span>
+                Facebook
               </a>
               <a
                 href="https://www.instagram.com/ariadpsych"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2.5 hover:text-white transition-colors duration-200 w-fit"
+                className="hover:text-white transition-colors"
               >
-                <span>Instagram</span>
+                Instagram
               </a>
               <a
                 href="https://www.linkedin.com/company/ariad-psycholgical-services-pllc/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2.5 hover:text-white transition-colors duration-200 w-fit"
+                className="hover:text-white transition-colors"
               >
-                <span>LinkedIn</span>
+                LinkedIn
               </a>
             </div>
           </div>
         </div>
 
-        {/* --- BOTTOM ROW: LEGAL BOUNDARY --- */}
+        {/* BOTTOM ROW */}
         <div className="mt-12 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="text-center sm:text-left space-y-1">
             <p className="text-slate-400 text-[11px] font-light">
-              &copy; {currentYear} ARIAD Psychological Services. All rights
-              reserved.
+              © {currentYear} ARIAD Psychological Services. All rights reserved.
             </p>
-            {/* <div className="flex flex-wrap justify-center sm:justify-start gap-x-4 gap-y-1 text-[10px] uppercase tracking-wider text-slate-400 font-bold">
-              <a
-                href="#privacy"
-                className="hover:text-white transition-colors duration-200"
-              >
-                Privacy Policy
-              </a>
-              <span className="text-white/10 hidden sm:inline">|</span>
-              <a
-                href="#terms"
-                className="hover:text-white transition-colors duration-200"
-              >
-                Terms of Service
-              </a>
-              <span className="text-white/10 hidden sm:inline">|</span>
-        
-            </div> */}
           </div>
 
-          {/* Scroll-To-Top Trigger */}
           <button
             onClick={scrollToTop}
-            className="p-3.5 rounded-xl bg-white/5 border border-white/10 text-white hover:text-[#023B37] hover:bg-[#D6C1A0] hover:border-[#D6C1A0] transition-all duration-300 active:scale-95 group shrink-0 outline-none"
+            className="p-3.5 rounded-xl bg-white/5 border border-white/10 text-white hover:text-[#023B37] hover:bg-[#D6C1A0] hover:border-[#D6C1A0] transition-all duration-300 active:scale-95 group"
             aria-label="Back to top"
           >
             <ArrowUp className="w-4 h-4 transform group-hover:-translate-y-0.5 transition-transform duration-300" />

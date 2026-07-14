@@ -231,6 +231,7 @@ export default function Navbar() {
       ],
     },
     { name: "Blog", href: "/blog", hasDropdown: false },
+    { name: "FAQs", href: "/faq", hasDropdown: false },
     {
       name: "Locations",
       href: "/locations",
@@ -343,7 +344,7 @@ export default function Navbar() {
                 ARIAD
               </span>
               <span className="text-[8px] md:text-[9px] uppercase tracking-widest text-[#067F76] font-extrabold mt-1">
-                Psychological
+                Psychological Services
               </span>
             </div>
           </Link>

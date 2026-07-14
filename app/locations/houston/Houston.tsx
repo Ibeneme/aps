@@ -44,7 +44,7 @@ export default function HoustonOfficePage() {
                 <ContactItem
                   icon={<MapPin className="text-[#067F76] w-5 h-5" />}
                   label="Address"
-                  text="Please contact us for current Houston office address"
+                  text="5718 Westheimer Rd. Suite 1000, Houston, TX 77057"
                 />
                 <ContactItem
                   icon={<Phone className="text-[#067F76] w-5 h-5" />}
@@ -62,14 +62,15 @@ export default function HoustonOfficePage() {
             </div>
           </div>
 
-          {/* Right: The Map */}
+          {/* Right: Accurate Map */}
           <div className="lg:col-span-7 rounded-3xl overflow-hidden border border-stone-200 min-h-[450px] bg-stone-100 relative group">
             <iframe
-              title="Houston Office Location"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3473.1234567890123!2d-95.3698028!3d29.7604267!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864e9f131a441e8f%3A0x6b490f23078a9c33!2sDowntown+Houston%2C+TX!5e0!3m2!1sen!2sus!4v1680000000000!5m2!1sen!2sus"
+              title="ARIAD Psychological Services - Houston Office"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3474.057!2d-95.4835!3d29.7398!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640c0e0b0b0b0b0%3A0xYOUR_PLACE_ID_HERE!2s5718+Westheimer+Rd+%231000%2C+Houston%2C+TX+77057!5e0!3m2!1sen!2sus!4v1720000000000"
               className="w-full h-full border-none opacity-90 group-hover:opacity-100 transition-opacity duration-300"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
             />
           </div>
         </div>

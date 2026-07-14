@@ -1,7 +1,6 @@
-
+// app/about/page.tsx
 import { Metadata } from "next";
 import AboutUs from "./AboutUs";
-import SEO from "@/components/SEO"; // ← Added SEO Import
 
 export const metadata: Metadata = {
   title: "About Us | Meet Our Team | ARIAD Psychological Services",
@@ -40,6 +39,7 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
+  // Enhanced Structured Data with Organization + Multiple Physicians
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "AboutPage",
@@ -50,20 +50,50 @@ export default function AboutPage() {
     mainEntity: {
       "@type": "MedicalBusiness",
       name: "ARIAD Psychological Services, PLLC",
+      url: "https://ariadpsychservices.com",
+      image: "https://ariadpsychservices.com/images/logo_a.png",
+      telephone: "+1-469-733-9976",
       address: {
         "@type": "PostalAddress",
         streetAddress: "4131 N Central Expy Suite 900",
         addressLocality: "Dallas",
         addressRegion: "TX",
         postalCode: "75204",
+        addressCountry: "US",
       },
+      areaServed: [
+        { "@type": "State", name: "Texas" },
+        { "@type": "State", name: "Arizona" },
+      ],
+      // Physician / Clinician Profiles (repeat for each doctor)
+      medicalStaff: [
+        {
+          "@type": "Physician",
+          name: "Jaswin John", // ← Update with full name & credentials
+          medicalSpecialty: "Neuropsychology",
+          worksFor: {
+            "@type": "MedicalBusiness",
+            name: "ARIAD Psychological Services",
+          },
+          jobTitle: "Clinical Psychologist / Neuropsychologist", // ← Customize
+        },
+        {
+          "@type": "Physician",
+          name: "Isoken Adodo", // ← Update with full name & credentials
+          medicalSpecialty: "Neuropsychology",
+          worksFor: {
+            "@type": "MedicalBusiness",
+            name: "ARIAD Psychological Services",
+          },
+          jobTitle: "Clinical Psychologist", // ← Customize
+        },
+        // Add more doctors here as needed
+      ],
     },
   };
 
   return (
     <>
- 
-
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
