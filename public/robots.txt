@@ -1,0 +1,46 @@
+# =============================================
+# robots.txt for ARIAD Psychological Services
+# https://ariadpsychservices.com
+# =============================================
+
+User-agent: *
+
+# Allow important pages
+Allow: /
+Allow: /about
+Allow: /contact
+Allow: /faq
+Allow: /blog
+Allow: /services
+Allow: /locations
+
+# Services
+Allow: /services/adhd
+Allow: /services/asd
+Allow: /services/psychoed
+Allow: /services/neuro
+Allow: /services/mmpi
+Allow: /services/pre-surgical
+Allow: /services/additional
+Allow: /services/assessments
+
+# Locations
+Allow: /locations/dallas-hq
+Allow: /locations/houston
+Allow: /locations/*
+
+# Disallow sensitive or duplicate paths
+Disallow: /api/
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /_next/
+Disallow: /private/
+Disallow: /_vercel/
+Disallow: /thank-you
+Disallow: /success
+
+# Sitemap
+Sitemap: https://ariadpsychservices.com/sitemap.xml
+
+# Optional: Crawl delay (1 second between requests)
+Crawl-delay: 1
