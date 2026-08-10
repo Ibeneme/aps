@@ -6,7 +6,7 @@ import ScheduleSection from "@/components/home/ScheduleSection";
 import ServicesSection from "@/components/home/ServicesSection";
 //import AnimatedTestimonialsSection from "@/components/home/Testimonial";
 import WhyChooseUsSection from "@/components/home/WhyChooseUsSection";
-import SEO from "@/components/SEO";
+
 import Script from "next/script";
 
 export default function HomePageView() {
@@ -47,11 +47,6 @@ export default function HomePageView() {
 
   return (
     <>
-      <SEO
-        title="ARIAD Psychological Services, PLLC"
-        description="Expert neuropsychological evaluations and holistic mental health care in Dallas. Bridging cognitive roots and emotional well-being with compassionate, comprehensive care."
-        keywords="neuropsychological evaluation, psychological services, mental health Dallas, cognitive assessment, holistic therapy, child psychology, family therapy"
-      />
 
       {/* JSON-LD Structured Data for SEO */}
       <Script
