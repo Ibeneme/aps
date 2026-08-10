@@ -26,6 +26,9 @@ export const metadata: Metadata = {
   },
   description:
     "Expert neuropsychological evaluations and mental health care in Dallas & Houston, bridging cognitive roots with emotional well-being.",
+    alternates: {
+    canonical: process.env.NEXT_PUBLIC_SITE_URL,
+  },
   keywords: [
     "Neuropsychological Evaluation",
     "Psychological Services",
