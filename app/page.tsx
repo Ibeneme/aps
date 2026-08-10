@@ -3,10 +3,9 @@ import { Metadata } from "next";
 import HomePageView from "./home/page";
 
 export const metadata: Metadata = {
-  title:
-    "Expert psychological and neuropsychological evaluations in Dallas and Houston, Texas. ADHD testing, Autism (ASD) assessments, psychoeducational, and more. Compassionate care for children, teens, and adults",
+  title: "Psychological & Neuropsych Testing in Dallas & Houston | ARIAD",
   description:
-    "Expert psychological and neuropsychological evaluations in Dallas and Houston, Texas. ADHD testing, Autism (ASD) assessments, psychoeducational, and more. Compassionate care for children, teens, and adults.",
+    "Expert psychological and neuropsychological evaluations in Dallas and Houston, Texas. ADHD, Autism, and psychoeducational testing for children and adults.",
   alternates: {
     canonical: process.env.NEXT_PUBLIC_SITE_URL,
   },
@@ -29,7 +28,7 @@ export const metadata: Metadata = {
     "autism testing houston",
     "adhd evaluation texas",
     "psychoeducational assessment",
-    "neuropsychological testing ",
+    "neuropsychological testing",
   ],
 };
 
@@ -39,7 +38,7 @@ export default function Home() {
     "@type": "MedicalBusiness",
     name: "ARIAD Psychological Services",
     url: "https://ariadpsychservices.com",
-    logo: "https://ariadpsychservices.com/favicon.png", // Ensure this points to your absolute image URL
+    logo: "https://ariadpsychservices.com/favicon.png",
     image: "https://ariadpsychservices.com/favicon.png",
     telephone: "+14697339976",
     email: "info@ariadpsychservices.com",
@@ -66,12 +65,12 @@ export default function Home() {
     geo: [
       {
         "@type": "GeoCoordinates",
-        latitude: "32.8105", // Approximate coordinates for Dallas office
+        latitude: "32.8105",
         longitude: "-96.7766",
       },
       {
         "@type": "GeoCoordinates",
-        latitude: "29.7375", // Approximate coordinates for Houston office
+        latitude: "29.7375",
         longitude: "-95.4800",
       },
     ],
