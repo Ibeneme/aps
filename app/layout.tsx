@@ -21,11 +21,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: process.env.NEXT_PUBLIC_SITE_URL ? new URL(process.env.NEXT_PUBLIC_SITE_URL) : undefined,
   title: {
-    default: "ARIAD Psychological Services | Neuropsychological Testing",
+    default: "ARIAD Psychological Services | Expert Neuropsych Testing",
     template: "%s | ARIAD Psychological Services",
   },
   description:
-    "Expert neuropsychological evaluations and holistic mental health care in Dallas & Houston, bridging cognitive roots with emotional well-being.",
+    "Expert neuropsychological evaluations and mental health care in Dallas & Houston, bridging cognitive roots with emotional well-being.",
   keywords: [
     "Neuropsychological Evaluation",
     "Psychological Services",
@@ -63,7 +63,6 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-screen flex flex-col bg-[#F8FAF9] text-slate-900">
-        {/* HelmetProvider removed: Next.js handles head tags automatically */}
         <NavbarWrapper />
         <ScrollToTop />
         <main className="flex-1">{children}</main>
