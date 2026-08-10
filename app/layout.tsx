@@ -1,3 +1,4 @@
+// app/layout.tsx
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -20,11 +21,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: process.env.NEXT_PUBLIC_SITE_URL ? new URL(process.env.NEXT_PUBLIC_SITE_URL) : undefined,
   title: {
-    default: "ARIAD Psychological Services | Holistic Neuropsychological Evaluation",
+    default: "ARIAD Psychological Services | Neuropsychological Testing",
     template: "%s | ARIAD Psychological Services",
   },
   description:
-    "ARIAD Psychological Services provides expert neuropsychological evaluations and holistic mental health care in Dallas, bridging the gap between cognitive roots and emotional well-being.",
+    "Expert neuropsychological evaluations and holistic mental health care in Dallas & Houston, bridging cognitive roots with emotional well-being.",
   keywords: [
     "Neuropsychological Evaluation",
     "Psychological Services",
@@ -50,7 +51,6 @@ export const metadata: Metadata = {
     card: "summary_large_image",
   },
 };
-
 
 export default function RootLayout({
   children,
