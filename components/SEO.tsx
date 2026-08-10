@@ -1,9 +1,9 @@
 // components/SEO.tsx
 import { Helmet } from "react-helmet-async";
 
-const DEFAULT_TITLE = "ARIAD Psychological Services";
+const DEFAULT_TITLE = "ARIAD Psychological Services | Dallas & Houston";
 const DEFAULT_DESCRIPTION =
-  "Expert psychological insights, mental health articles, and professional perspectives from ARIAD.";
+  "Explore expert psychological insights, mental health articles, and professional perspectives from ARIAD Psychological Services in Texas.";
 const DEFAULT_IMAGE = "/assets/images/logo_a.png";
 
 export default function SEO({
