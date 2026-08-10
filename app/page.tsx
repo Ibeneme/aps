@@ -3,9 +3,9 @@ import { Metadata } from "next";
 import HomePageView from "./home/page";
 
 export const metadata: Metadata = {
-  title: "Psychological & Neuropsych Testing in Dallas & Houston | ARIAD",
+  title: "Psychological Evaluations in Dallas & Houston | ARIAD",
   description:
-    "Expert psychological and neuropsychological evaluations in Dallas and Houston, Texas. ADHD, Autism, and psychoeducational testing for children and adults.",
+    "Expert psychological and neuropsychological testing in Dallas and Houston, Texas. Specialized ADHD, autism, and psychoeducational evaluations.",
   alternates: {
     canonical: process.env.NEXT_PUBLIC_SITE_URL,
   },
