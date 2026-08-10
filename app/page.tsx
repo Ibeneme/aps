@@ -3,12 +3,7 @@ import { Metadata } from "next";
 import HomePageView from "./home/page";
 
 export const metadata: Metadata = {
-  title: "Psychological Evaluations in Dallas & Houston | ARIAD",
-  description:
-    "Expert psychological and neuropsychological testing in Dallas and Houston, Texas. Specialized ADHD, autism, and psychoeducational evaluations.",
-  alternates: {
-    canonical: process.env.NEXT_PUBLIC_SITE_URL,
-  },
+
   openGraph: {
     title: "ARIAD Psychological Services — Dallas & Houston",
     description:
