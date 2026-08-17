@@ -9,12 +9,12 @@ import nodemailer from 'nodemailer';
 const ZOHO_EMAIL_ADMIN = 'ariad@ariadpsychservices.com';
 
 const transporter = nodemailer.createTransport({
-    host: 'smtp.zoho.com',
+service: 'gmail',
     port: 465,
     secure: true,
     auth: {
         user: process.env.ZOHO_EMAIL,
-        pass: process.env.ZOHO_APP_PASSWORD?.replace(/\s/g, ''),
+        pass: process.env.GMAIL_APP_PASSWORD?.replace(/\s/g, ''),
     },
 });
 
