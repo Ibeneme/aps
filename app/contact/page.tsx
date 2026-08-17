@@ -1,211 +1,88 @@
-"use client";
+import { Metadata } from "next";
+import ConsultationClient from "./ConsultationClient";
 
-import React, { useState } from "react";
-import { Helmet } from "react-helmet-async";
-import { motion, AnimatePresence } from "framer-motion";
-import { IoAdd, IoRemove } from "react-icons/io5";
 
-const faqs = [
-  {
-    question: "What services does Boring Thinkers Limited provide?",
-    answer:
-      "Boring Thinkers Limited specializes in designing and developing user-centric software solutions, including web applications, mobile apps, enterprise software, and AI-powered tools. We also offer UI/UX design, software consulting, and product strategy services.",
-  },
-  {
-    question: "How does Boring Thinkers Limited ensure quality?",
-    answer:
-      "We follow a structured process that includes thorough research, ideation, design, agile development, rigorous testing, and continuous improvement. Our focus is on building reliable, scalable, and intuitive solutions.",
-  },
-  {
-    question: "What industries do you serve?",
-    answer:
-      "We develop solutions for various industries, including fintech, e-commerce, logistics, education, and AI-driven applications. Our team is flexible and can tailor software to meet the unique needs of any sector.",
-  },
-  {
-    question: "Do you have a platform for clients to track projects?",
-    answer:
-      "Yes. We’ve built custom software specifically for managing and tracking client projects. Once onboarded, clients receive secure login credentials to access real-time updates about progress, milestones, and team activity. Explore our engineered projects or learn more about our engineering standards.",
-  },
-  {
-    question: "Can I do equity-based business with you?",
-    answer:
-      "Yes, we’re open to equity and cash-based partnerships for select clients and startups. We’re happy to discuss hybrid business models that align incentives and create long-term value.",
-  },
-  {
-    question: "How can I collaborate for my project?",
-    answer:
-      "Reach out via email at contact@boringthinkers.com. We will discuss your project needs, define the scope, and develop a customized solution that aligns with your vision. You can also review our team leadership and company background before reaching out.",
-  },
-];
-
-const FAQPage: React.FC = () => {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
-
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: faq.answer,
+export const metadata: Metadata = {
+  title: "Schedule a Psychological Consultation | ARIAD Psychological Services",
+  description:
+@@ -16,28 +15,76 @@
+      "Connect with our clinical coordination team to verify insurance and schedule testing implementations.",
+    url: `${process.env.NEXT_PUBLIC_SITE_URL}/contact`,
+    type: "website",
+    images: [
+      {
+        url: "https://ariadpsychservices.com/images/og-contact.jpg", // Update with real image
+        width: 1200,
+        height: 630,
+        alt: "ARIAD Psychological Services - Schedule Consultation",
       },
-    })),
+    ],
+  },
+};
+
+export default function ConsultationPage() {
+  // Enhanced Structured Data with rich contact & organization details
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    name: "ARIAD Psychological Services Consultation Request",
+    name: "ARIAD Psychological Services - Consultation & Intake",
+    description:
+      "Secure administrative submission form to initiate intake evaluation across Texas and Arizona hub networks.",
+      "Schedule confidential intake consultations for ADHD, Autism, neuropsychological, and psychoeducational testing across Texas and Arizona.",
+    url: `${process.env.NEXT_PUBLIC_SITE_URL}/contact`,
+    mainEntity: {
+      "@type": "MedicalBusiness",
+      "@id": "https://ariadpsychservices.com",
+      name: "ARIAD Psychological Services",
+      image: "https://ariadpsychservices.com/images/logo_a.png",
+      url: "https://ariadpsychservices.com",
+      telephone: "+1-469-733-9976",
+      email: "info@ariadpsychservices.com", // ← Update if you have a real contact email
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "4131 N Central Expy, Suite 900",
+        addressLocality: "Dallas",
+        addressRegion: "TX",
+        postalCode: "75204",
+        addressCountry: "US",
+      },
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: 32.8306,
+        longitude: -96.786518,
+      },
+      openingHoursSpecification: {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        opens: "09:00",
+        closes: "17:00",
+      },
+      areaServed: [
+        {
+          "@type": "State",
+          name: "Texas",
+        },
+      ],
+      contactPoint: {
+        "@type": "ContactPoint",
+        telephone: "+1-469-733-9976",
+        contactType: "customer service",
+        availableLanguage: ["English"],
+        hoursAvailable: "Monday to Friday, 9:00 AM - 5:00 PM",
+      },
+    },
   };
 
   return (
     <>
-      <Helmet>
-        <title>Frequently Asked Questions | Boring Thinkers</title>
-        <meta
-          name="description"
-          content="Find answers to common questions about Boring Thinkers Limited, our custom software architecture services, pricing, project tracking, and collaboration models."
-        />
-        <link rel="canonical" href="https://boringthinkers.com/faq" />
-        <meta
-          property="og:title"
-          content="Frequently Asked Questions | Boring Thinkers"
-        />
-        <meta
-          property="og:description"
-          content="Get answers about our custom software development process, tech stack, equity partnerships, and collaboration guidelines."
-        />
-        <meta property="og:url" content="https://boringthinkers.com/faq" />
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="Boring Thinkers" />
-        <script type="application/ld+json">
-          {JSON.stringify(structuredData)}
-        </script>
-      </Helmet>
+ 
 
-      <section className="relative bg-white pt-[180px] md:px-20 min-h-screen overflow-hidden">
-        {/* Shared brand type system */}
-        <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Space+Mono:wght@400;700&display=swap');
-        .font-editorial { font-family: 'Instrument Serif', serif; font-style: italic; }
-        .font-technical { font-family: 'Space Mono', monospace; }
-      `}</style>
-
-        {/* Faint graph-paper texture, consistent with the rest of the site */}
-        <div
-          className="absolute inset-0 pointer-events-none opacity-[0.05]"
-          style={{
-            backgroundImage:
-              "linear-gradient(#06110A 1px, transparent 1px), linear-gradient(90deg, #06110A 1px, transparent 1px)",
-            backgroundSize: "40px 40px",
-          }}
-        />
-
-        <div className="min-h-screen bg-white selection:bg-[#FFD000] selection:text-[#050505]">
-          <div className="max-w-5xl mx-auto px-4">
-            {/* Header */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="mb-24"
-            >
-              <span className="text-[#050505] text-[10px] font-black uppercase tracking-[0.6em] mb-4 block">
-                Information Base
-              </span>
-              <h1 className="text-5xl md:text-[8rem] font-black text-[#050505] tracking-[-0.07em] leading-[0.8]">
-                Questions.
-              </h1>
-            </motion.div>
-
-            {/* FAQ List */}
-            <div className="">
-              {faqs.map((faq, index) => (
-                <div key={index} className="border-b border-gray-100">
-                  <button
-                    onClick={() =>
-                      setActiveIndex(activeIndex === index ? null : index)
-                    }
-                    className="w-full py-10 flex items-start justify-between text-left group transition-all cursor-pointer"
-                  >
-                    <div className="flex gap-8 items-start">
-                      <span
-                        className={`font-mono text-sm pt-2 transition-colors duration-300 ${
-                          activeIndex === index
-                            ? "text-[#FFD000]"
-                            : "text-gray-300"
-                        }`}
-                      >
-                        {index < 9 ? `0${index + 1}` : index + 1}
-                      </span>
-                      <h3
-                        className={`text-xl md:text-3xl font-black tracking-tighter transition-all duration-300 ${
-                          activeIndex === index
-                            ? "text-[#050505]"
-                            : "text-[#050505]/40 group-hover:text-[#050505]"
-                        }`}
-                      >
-                        {faq.question}
-                      </h3>
-                    </div>
-
-                    <div
-                      className={`mt-1 p-2 rounded-full transition-all duration-500 ${
-                        activeIndex === index
-                          ? "bg-[#050505] text-[#FFD000] rotate-180"
-                          : "bg-gray-50 text-gray-400 group-hover:bg-[#050505] group-hover:text-white"
-                      }`}
-                    >
-                      {activeIndex === index ? (
-                        <IoRemove size={24} />
-                      ) : (
-                        <IoAdd size={24} />
-                      )}
-                    </div>
-                  </button>
-
-                  <AnimatePresence>
-                    {activeIndex === index && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                      >
-                        <div className="pb-12 pl-16 md:pl-32 pr-6 md:pr-24">
-                          <p className="text-lg md:text-xl font-bold text-[#050505]/70 leading-relaxed max-w-3xl">
-                            {faq.answer.split(" ").map((word, i) => {
-                              if (word.includes("@")) {
-                                return (
-                                  <span key={i} className="text-[#FFD000] underline">
-                                    {word}{" "}
-                                  </span>
-                                );
-                              }
-                              if (word === "projects") {
-                                return (
-                                  <a key={i} href="/projects" className="text-[#050505] underline hover:text-black">
-                                    {word}{" "}
-                                  </a>
-                                );
-                              }
-                              if (word === "team" || word === "leadership") {
-                                return (
-                                  <a key={i} href="/our-team" className="text-[#050505] underline hover:text-black">
-                                    {word}{" "}
-                                  </a>
-                                );
-                              }
-                              return <span key={i}>{word} </span>;
-                            })}
-                          </p>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <ConsultationClient />
     </>
   );
-};
-
-export default FAQPage;
+}
