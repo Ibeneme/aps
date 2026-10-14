@@ -9,12 +9,12 @@ import nodemailer from 'nodemailer';
 const ZOHO_EMAIL_ADMIN = 'ariad@ariadpsychservices.com';
 
 const transporter = nodemailer.createTransport({
-service: 'gmail',
+    host: 'smtp.zoho.com',
     port: 465,
     secure: true,
     auth: {
         user: process.env.ZOHO_EMAIL,
-        pass: process.env.GMAIL_APP_PASSWORD?.replace(/\s/g, ''),
+        pass: process.env.ZOHO_APP_PASSWORD?.replace(/\s/g, ''),
     },
 });
 
@@ -37,22 +37,38 @@ const headerStyle = "color: #023B37; font-weight: 800; font-size: 28px; margin-b
 const accentStyle = "color: #067F76; font-weight: 600;";
 
 export async function GET() {
+    console.log("[API GET] /api/inquiries requested");
     try {
+        console.log("[API GET] Attempting to connect to DB...");
         await connectDB();
+        console.log("[API GET] DB connected. Fetching inquiries...");
         const inquiries = await Inquiry.find({}).sort({ created_at: -1 }).lean();
+        console.log(`[API GET] Successfully fetched ${inquiries.length} inquiries.`);
         return NextResponse.json(inquiries);
     } catch (error) {
-        console.error("Error fetching inquiries:", error);
+        console.error("[API GET ERROR] Failed fetching inquiries:", error);
         return NextResponse.json({ error: "Failed to fetch inquiries" }, { status: 500 });
     }
 }
 
 export async function POST(req: Request) {
+    console.log("[API POST] /api/inquiries submission started");
     try {
-        await connectDB();
         const body = await req.json();
+        console.log("[API POST] Request payload received:", {
+            name: body.name,
+            email: body.email,
+            location: body.location,
+            hasPhone: !!body.phone,
+            hasMessage: !!body.message
+        });
 
-        // 1. Save to Database
+        // 1. Connect to DB & Save
+        console.log("[API POST] Connecting to MongoDB...");
+        await connectDB();
+        console.log("[API POST] MongoDB connected successfully.");
+
+        console.log("[API POST] Creating Inquiry document in database...");
         const newInquiry = await Inquiry.create({
             name: body.name,
             email: body.email,
@@ -60,9 +76,11 @@ export async function POST(req: Request) {
             location: body.location,
             message: body.message,
         });
+        console.log("[API POST] Inquiry successfully saved with ID:", newInquiry._id);
 
         // 2. Send Notifications via Zoho SMTP
         try {
+            console.log("[API POST] Preparing client and admin confirmation emails...");
             const clientEmailHtml = `
               <div style="${emailWrapperStyle}">
                 <h1 style="${headerStyle}">Thank you, ${body.name}!</h1>
@@ -80,6 +98,7 @@ export async function POST(req: Request) {
             `;
 
             // Email to Client
+            console.log(`[API POST] Sending email to client: ${body.email}`);
             await transporter.sendMail({
                 from: `Ariad Psychological Services <${process.env.ZOHO_EMAIL}>`,
                 to: body.email,
@@ -87,8 +106,10 @@ export async function POST(req: Request) {
                 subject: 'We have received your inquiry - Ariad Psychological Services',
                 html: clientEmailHtml,
             });
+            console.log("[API POST] Client email sent successfully.");
 
             // Email to Admin
+            console.log(`[API POST] Sending email notification to admin(s): ${ZOHO_EMAIL_ADMIN}`);
             await transporter.sendMail({
                 from: `Inquiry System <${process.env.ZOHO_EMAIL}>`,
                 to: [ZOHO_EMAIL_ADMIN, 'ariad@ariadpsychservices.com'],
@@ -107,10 +128,13 @@ export async function POST(req: Request) {
                   </div>
                 `,
             });
+            console.log("[API POST] Admin email notification sent successfully.");
+
         } catch (emailError) {
-            console.error("Email service error:", emailError);
+            console.error("[API POST EMAIL ERROR] Failed to send email notifications via Zoho:", emailError);
         }
 
+        console.log("[API POST] Request completed successfully.");
         return NextResponse.json({
             success: true,
             message: "Inquiry submitted successfully",
@@ -118,7 +142,7 @@ export async function POST(req: Request) {
         }, { status: 201 });
 
     } catch (error: any) {
-        console.error("Error creating inquiry:", error);
+        console.error("[API POST CRITICAL ERROR] Error creating inquiry:", error);
         return NextResponse.json({
             error: "Failed to submit inquiry",
             details: error.message
