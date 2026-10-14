@@ -53,7 +53,7 @@ export default function ConsultationPage() {
       });
     } catch (err: any) {
       console.error("Submission error:", err);
-      alert(`Error: ${err.message}`);
+     
     } finally {
       setLoading(false);
     }
