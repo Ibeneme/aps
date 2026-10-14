@@ -100,15 +100,24 @@ export async function POST(req: Request) {
                 return NextResponse.json({ error: 'OTP has expired' }, { status: 401 });
             }
 
-            const admin = await Admin.findOne({ email });
-            if (!admin) return NextResponse.json({ error: 'Admin not found' }, { status: 404 });
-
             const hashedPassword = await bcrypt.hash(newPassword, 12);
-            admin.password = hashedPassword;
+
+            // If admin is not found, automatically create them
+            let admin = await Admin.findOne({ email });
+            if (!admin) {
+                admin = new Admin({
+                    email,
+                    password: hashedPassword,
+                    role: 'admin',
+                });
+            } else {
+                admin.password = hashedPassword;
+            }
+
             await admin.save();
             await OTP.deleteOne({ email });
 
-            return NextResponse.json({ success: true, message: 'Password reset successfully' });
+            return NextResponse.json({ success: true, message: 'Password reset/Admin created successfully' });
         }
 
         return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
